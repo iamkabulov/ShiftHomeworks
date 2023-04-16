@@ -16,17 +16,19 @@ struct Car {
 }
 
 enum Body: Int {
-	case van = 0
-	case sedan = 1
-	case pickup = 2
-	case crossover = 3
+	case nothing = 0
+	case van = 1
+	case sedan = 2
+	case pickup = 3
+	case crossover = 4
 	static var count: Int { return Body.crossover.rawValue + 1 }
 
-	var description: String {
+	var description: String? {
 			switch self {
+			case .nothing: return nil
 			case .van: return "Van"
-			case .sedan   : return "Sedan"
-			case .pickup : return "Pickup"
+			case .sedan: return "Sedan"
+			case .pickup: return "Pickup"
 			case .crossover: return "Crossover"
 			}
 		}
@@ -34,6 +36,6 @@ enum Body: Int {
 
 var cars = [Car]()
 
-func appendik(_ car: Car) {
+func addNewCar(_ car: Car) {
 	cars.append(car)
 }

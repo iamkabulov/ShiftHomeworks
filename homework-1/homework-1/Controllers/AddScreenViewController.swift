@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class AddScreenViewController: UIViewController {
 
 	var body: Body?
 	let stackView = UIStackView()
@@ -39,7 +39,7 @@ class ViewController: UIViewController {
 	}
 }
 
-extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension AddScreenViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
 	func style() {
 		stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -127,28 +127,23 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 	}
 
 	@objc func addButtonTapped(_ sender: UIButton) {
-		let isManufaturerValid = manufacturerTextField.validate()
-		let isModelValid = modelTextField.validate()
-		let isBodyValid = bodyTextField.validate()
-
-		if isManufaturerValid && isModelValid && isBodyValid {
+		let isValid = validateTextFields()
+		if isValid {
 			guard let manufaturer = manufacturerTextField.textField.text,
 				  let model = modelTextField.textField.text,
 				  let body = body,
 				  let year = yearOfIssueTextField.textField.text,
 				  let carNumber = carNumberTextField.textField.text else { return }
 			let yearOfIssue = Int(year)
-			appendik(Car(manufaturer: manufaturer, model: model, body: body, yearOfIssue: yearOfIssue, carNumber: carNumber))
-			print(cars)
-		} else {
-			print("NOT OK")
+			addNewCar(Car(manufaturer: manufaturer, model: model, body: body, yearOfIssue: yearOfIssue, carNumber: carNumber))
+			reset()
 		}
 	}
 }
 
 // MARK: - TextViewDelegate
 
-extension ViewController: TextViewDelegate {
+extension AddScreenViewController: TextViewDelegate {
 
 	func focusLosed(_ sender: TextView) {
 		if sender === manufacturerTextField {
@@ -181,5 +176,24 @@ extension ViewController: TextViewDelegate {
 
 	@objc func keyboardWillHide(sender: Notification) {
 		view.frame.origin.y = 0
+	}
+
+	func validateTextFields() -> Bool {
+			let isManufaturerValid = manufacturerTextField.validate()
+			let isModelValid = modelTextField.validate()
+			let isBodyValid = bodyTextField.validate()
+
+		if isManufaturerValid && isModelValid && isBodyValid {
+			return true
+		}
+		return false
+	}
+
+	func reset() {
+		manufacturerTextField.textField.text = ""
+		modelTextField.textField.text = ""
+		bodyTextField.textField.text = ""
+		yearOfIssueTextField.textField.text = ""
+		carNumberTextField.textField.text = ""
 	}
 }

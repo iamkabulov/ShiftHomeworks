@@ -15,9 +15,6 @@ class ListScreenViewController: UIViewController {
 	var searchTextField = UITextField()
 	var body: Body?
 	var filtered = [Car]()
-//	var cars = [Car]()
-//	var cars = [Car(manufaturer: "TOYOTA", model: "CAMRY", body: Body.sedan, yearOfIssue: 1992, carNumber: nil),
-//				Car(manufaturer: "KIA", model: "K5", body: Body.sedan, yearOfIssue: nil, carNumber: "777KZ")]
 
 
 	override func viewDidLoad() {
@@ -137,6 +134,8 @@ extension ListScreenViewController: UITextFieldDelegate {
 		guard let text = textField.text else { return }
 		if text != "" {
 			filtered = cars.filter { $0.body == body }
+			refresh()
+		} else {
 			refresh()
 		}
 	}

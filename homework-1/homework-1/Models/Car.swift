@@ -26,10 +26,10 @@ enum Body: Int {
 	var description: String? {
 			switch self {
 			case .nothing: return nil
-			case .van: return "Van"
-			case .sedan: return "Sedan"
-			case .pickup: return "Pickup"
-			case .crossover: return "Crossover"
+			case .van: return "Вэн"
+			case .sedan: return "Седан"
+			case .pickup: return "Пикап"
+			case .crossover: return "Кроссовер"
 			}
 		}
 }

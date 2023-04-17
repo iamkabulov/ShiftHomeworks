@@ -74,9 +74,11 @@ extension TableViewCell {
 	}
 
 	func configure(with car: Car) {
+		let rawValueOfBody = car.body.rawValue
+		guard let bodyType = Body(rawValue: rawValueOfBody)?.description else { return }
 		manufaturerLabel.text = "Производитель: \(car.manufaturer)"
 		modelLabel.text = "Модель: \(car.model)"
-		bodyLabel.text = "Тип кузова: \(car.body)"
+		bodyLabel.text = "Тип кузова: \(bodyType)"
 
 		if let yearOfIssue = car.yearOfIssue {
 			yearOfIssueLabel.text = "Год выпуска: \(yearOfIssue)"

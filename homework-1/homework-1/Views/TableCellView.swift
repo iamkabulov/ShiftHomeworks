@@ -34,7 +34,6 @@ class TableViewCell: UITableViewCell {
 extension TableViewCell {
 
 	func setup() {
-		
 		manufaturerLabel.translatesAutoresizingMaskIntoConstraints = false
 		manufaturerLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
 
@@ -60,16 +59,20 @@ extension TableViewCell {
 
 	func layout() {
 		NSLayoutConstraint.activate([
-			manufaturerLabel.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 2),
-			manufaturerLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 2),
+			manufaturerLabel.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 1),
+			manufaturerLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 1),
+
 			modelLabel.topAnchor.constraint(equalTo: manufaturerLabel.topAnchor),
-			modelLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: manufaturerLabel.trailingAnchor, multiplier: 2),
-			bodyLabel.topAnchor.constraint(equalToSystemSpacingBelow: manufaturerLabel.bottomAnchor, multiplier: 2),
-			bodyLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 2),
+			modelLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: manufaturerLabel.trailingAnchor, multiplier: 1),
+
+			bodyLabel.topAnchor.constraint(equalToSystemSpacingBelow: manufaturerLabel.bottomAnchor, multiplier: 1),
+			bodyLabel.leadingAnchor.constraint(equalTo: manufaturerLabel.leadingAnchor),
+
 			yearOfIssueLabel.topAnchor.constraint(equalTo: bodyLabel.topAnchor),
-			yearOfIssueLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: bodyLabel.trailingAnchor, multiplier: 2),
-			carNumberLabel.topAnchor.constraint(equalTo: bodyLabel.topAnchor),
-			carNumberLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: yearOfIssueLabel.trailingAnchor, multiplier: 2),
+			yearOfIssueLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: bodyLabel.trailingAnchor, multiplier: 1),
+			
+			carNumberLabel.topAnchor.constraint(equalToSystemSpacingBelow: bodyLabel.bottomAnchor, multiplier: 1),
+			carNumberLabel.leadingAnchor.constraint(equalTo: manufaturerLabel.leadingAnchor),
 		])
 	}
 

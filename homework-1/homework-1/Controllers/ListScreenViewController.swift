@@ -11,7 +11,6 @@ class ListScreenViewController: UIViewController {
 
 	let tableView = UITableView()
 	let pickerView = UIPickerView()
-	let stackView = UIStackView()
 	var searchTextField = UITextField()
 	var body: Body?
 	var filtered = [Car]()
@@ -33,12 +32,9 @@ class ListScreenViewController: UIViewController {
 extension ListScreenViewController {
 
 	func style() {
-		stackView.translatesAutoresizingMaskIntoConstraints = false
-		stackView.axis = .vertical
-		stackView.distribution = .fill
-
 		pickerView.translatesAutoresizingMaskIntoConstraints = false
 		pickerView.delegate = self
+		
 		searchTextField.translatesAutoresizingMaskIntoConstraints = false
 		searchTextField.inputView = pickerView
 		searchTextField.delegate = self

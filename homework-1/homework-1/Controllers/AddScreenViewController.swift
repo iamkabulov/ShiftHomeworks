@@ -11,21 +11,21 @@ class AddScreenViewController: UIViewController {
 
 	var body: Body?
 	let stackView = UIStackView()
-	let manufacturerTextField = TextView(title: "Производитель",
-								keyboardType: .asciiCapable)
+	let manufacturerView = TextView(title: "Производитель",
+									keyboardType: .asciiCapable)
 
-	let modelTextField = TextView(title: "Модель",
-						 keyboardType: .asciiCapable)
+	let modelView = TextView(title: "Модель",
+							 keyboardType: .asciiCapable)
 
 	let bodyPickerView = UIPickerView()
-	let bodyTextField = TextView(title: "Тип кузова",
+	let bodyView = TextView(title: "Тип кузова",
+							keyboardType: .asciiCapable)
+
+	let yearOfIssueView = TextView(title: "Год выпуска",
+								   keyboardType: .numberPad)
+
+	let carNumberView = TextView(title: "Гос. номер",
 								 keyboardType: .asciiCapable)
-
-	let yearOfIssueTextField = TextView(title: "Год выпуска",
-										keyboardType: .numberPad)
-
-	let carNumberTextField = TextView(title: "Гос. номер",
-									  keyboardType: .asciiCapable)
 
 	let addButton = UIButton(type: .system)
 
@@ -43,28 +43,26 @@ extension AddScreenViewController: UIPickerViewDelegate, UIPickerViewDataSource 
 
 	func style() {
 		stackView.translatesAutoresizingMaskIntoConstraints = false
-//		stackView.spacing = 16
 		stackView.distribution = .equalCentering
 		stackView.axis = .vertical
 
-		manufacturerTextField.translatesAutoresizingMaskIntoConstraints = false
-		manufacturerTextField.delegate = self
+		manufacturerView.translatesAutoresizingMaskIntoConstraints = false
+		manufacturerView.delegate = self
 
-		modelTextField.translatesAutoresizingMaskIntoConstraints = false
-		modelTextField.delegate = self
+		modelView.translatesAutoresizingMaskIntoConstraints = false
+		modelView.delegate = self
 
 		bodyPickerView.translatesAutoresizingMaskIntoConstraints = false
 		bodyPickerView.delegate = self
-		bodyTextField.translatesAutoresizingMaskIntoConstraints = false
-		bodyTextField.textField.inputView = bodyPickerView
-		bodyTextField.delegate = self
 		
-		bodyTextField.textField.tintColor = .clear
-//		bodyTextField.textField.isUserInteractionEnabled = false
+		bodyView.translatesAutoresizingMaskIntoConstraints = false
+		bodyView.textField.inputView = bodyPickerView
+		bodyView.delegate = self
+		bodyView.textField.tintColor = .clear
 
-		yearOfIssueTextField.translatesAutoresizingMaskIntoConstraints = false
+		yearOfIssueView.translatesAutoresizingMaskIntoConstraints = false
 
-		carNumberTextField.translatesAutoresizingMaskIntoConstraints = false
+		carNumberView.translatesAutoresizingMaskIntoConstraints = false
 
 		addButton.translatesAutoresizingMaskIntoConstraints = false
 		addButton.configuration = .filled()
@@ -74,11 +72,11 @@ extension AddScreenViewController: UIPickerViewDelegate, UIPickerViewDataSource 
 	}
 
 	func layout() {
-		stackView.addArrangedSubview(manufacturerTextField)
-		stackView.addArrangedSubview(modelTextField)
-		stackView.addArrangedSubview(bodyTextField)
-		stackView.addArrangedSubview(yearOfIssueTextField)
-		stackView.addArrangedSubview(carNumberTextField)
+		stackView.addArrangedSubview(manufacturerView)
+		stackView.addArrangedSubview(modelView)
+		stackView.addArrangedSubview(bodyView)
+		stackView.addArrangedSubview(yearOfIssueView)
+		stackView.addArrangedSubview(carNumberView)
 		view.addSubview(stackView)
 		view.addSubview(addButton)
 
@@ -104,7 +102,7 @@ extension AddScreenViewController: UIPickerViewDelegate, UIPickerViewDataSource 
 	}
 
 	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-		bodyTextField.textField.text = Body(rawValue: row)?.description
+		bodyView.textField.text = Body(rawValue: row)?.description
 		if let bodyValue = Body(rawValue: row) {
 			body = bodyValue
 		}
@@ -129,11 +127,11 @@ extension AddScreenViewController: UIPickerViewDelegate, UIPickerViewDataSource 
 	@objc func addButtonTapped(_ sender: UIButton) {
 		let isValid = validateTextFields()
 		if isValid {
-			guard let manufaturer = manufacturerTextField.textField.text,
-				  let model = modelTextField.textField.text,
+			guard let manufaturer = manufacturerView.textField.text,
+				  let model = modelView.textField.text,
 				  let body = body,
-				  let year = yearOfIssueTextField.textField.text,
-				  let carNumber = carNumberTextField.textField.text else { return }
+				  let year = yearOfIssueView.textField.text,
+				  let carNumber = carNumberView.textField.text else { return }
 			let yearOfIssue = Int(year)
 			addNewCar(Car(manufaturer: manufaturer, model: model, body: body, yearOfIssue: yearOfIssue, carNumber: carNumber))
 			reset()
@@ -146,12 +144,12 @@ extension AddScreenViewController: UIPickerViewDelegate, UIPickerViewDataSource 
 extension AddScreenViewController: TextViewDelegate {
 
 	func focusLosed(_ sender: TextView) {
-		if sender === manufacturerTextField {
-			_ = manufacturerTextField.validate()
-		} else if sender === modelTextField {
-			_ = modelTextField.validate()
-		} else if sender === bodyTextField {
-			_ = bodyTextField.validate()
+		if sender === manufacturerView {
+			_ = manufacturerView.validate()
+		} else if sender === modelView {
+			_ = modelView.validate()
+		} else if sender === bodyView {
+			_ = bodyView.validate()
 		}
 	}
 
@@ -179,9 +177,9 @@ extension AddScreenViewController: TextViewDelegate {
 	}
 
 	func validateTextFields() -> Bool {
-			let isManufaturerValid = manufacturerTextField.validate()
-			let isModelValid = modelTextField.validate()
-			let isBodyValid = bodyTextField.validate()
+		let isManufaturerValid = manufacturerView.validate()
+		let isModelValid = modelView.validate()
+		let isBodyValid = bodyView.validate()
 
 		if isManufaturerValid && isModelValid && isBodyValid {
 			return true
@@ -190,10 +188,10 @@ extension AddScreenViewController: TextViewDelegate {
 	}
 
 	func reset() {
-		manufacturerTextField.textField.text = ""
-		modelTextField.textField.text = ""
-		bodyTextField.textField.text = ""
-		yearOfIssueTextField.textField.text = ""
-		carNumberTextField.textField.text = ""
+		manufacturerView.textField.text = ""
+		modelView.textField.text = ""
+		bodyView.textField.text = ""
+		yearOfIssueView.textField.text = ""
+		carNumberView.textField.text = ""
 	}
 }

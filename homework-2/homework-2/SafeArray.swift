@@ -9,28 +9,54 @@ import Foundation
 
 struct SafeArray<T> {
 	private var elements: [T] = []
+	private let semaphore = DispatchSemaphore(value: 1)
+	
 	var count: Int {
-		elements.count
+		semaphore.wait()
+		defer {
+			semaphore.signal()
+		}
+		return elements.count
 	}
 
 	var isEmpty: Bool {
-		elements.isEmpty
+		semaphore.wait()
+		defer {
+			semaphore.signal()
+		}
+		return elements.isEmpty
 	}
 
 	mutating func append(_ item: T) {
-		elements.append(item)
+		semaphore.wait()
+		defer {
+			semaphore.signal()
+		}
+		self.elements.append(item)
 	}
 
 	mutating func remove(at index: Int) {
-		elements.remove(at: index)
+		semaphore.wait()
+		defer {
+			semaphore.signal()
+		}
+		self.elements.remove(at: index)
 	}
 
 	func subcsript(_ index: Int) -> T {
-		elements[index]
+		semaphore.wait()
+		defer {
+			semaphore.signal()
+		}
+		return elements[index]
 	}
 
 	func contains<T: Equatable> (_ item: T) -> Bool {
-		elements.contains { item == $0 as? T }
+		semaphore.wait()
+		defer {
+			semaphore.signal()
+		}
+		return elements.contains { item == $0 as? T }
 	}
 }
 

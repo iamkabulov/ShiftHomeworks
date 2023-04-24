@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct SafeArray {
-	private var elements: [String] = []
+struct SafeArray<T> {
+	private var elements: [T] = []
 	var count: Int {
 		elements.count
 	}
@@ -17,7 +17,7 @@ struct SafeArray {
 		elements.isEmpty
 	}
 
-	mutating func append(_ item: String) {
+	mutating func append(_ item: T) {
 		elements.append(item)
 	}
 
@@ -25,12 +25,12 @@ struct SafeArray {
 		elements.remove(at: index)
 	}
 
-	func subcsript(_ index: Int) -> String {
+	func subcsript(_ index: Int) -> T {
 		elements[index]
 	}
 
-	func contains(_ item: String) -> Bool {
-		elements.contains(item)
+	func contains<T: Equatable> (_ item: T) -> Bool {
+		elements.contains { item == $0 as? T }
 	}
 }
 

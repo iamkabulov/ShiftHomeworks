@@ -33,6 +33,7 @@ class TabBarViewController: UITabBarController {
 
 	private func setupTabBar() {
 		tabBar.isTranslucent = false
+		tabBar.backgroundColor = .systemBackground
 	}
 }
 

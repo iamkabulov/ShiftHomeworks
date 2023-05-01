@@ -22,6 +22,7 @@ class DeveloperSkillsViewController: UIViewController {
 
 extension DeveloperSkillsViewController {
 	func style() {
+		view.backgroundColor = .systemGray5
 		skillsView.translatesAutoresizingMaskIntoConstraints = false
 
 		view.addSubview(skillsView)

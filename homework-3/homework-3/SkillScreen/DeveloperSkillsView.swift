@@ -74,6 +74,7 @@ extension DeveloperSkillsView {
 	private func configureSkillsLabel() {
 		skillsTextView.translatesAutoresizingMaskIntoConstraints = false
 		skillsTextView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+		skillsTextView.textColor = .black
 		skillsTextView.layer.cornerRadius = 5
 		skillsTextView.font = UIFont.preferredFont(forTextStyle: .subheadline)
 	}

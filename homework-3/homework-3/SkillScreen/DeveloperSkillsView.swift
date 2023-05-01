@@ -55,12 +55,10 @@ extension DeveloperSkillsView {
 		vStackView.distribution = .fill
 		vStackView.spacing = Metrics.Spacing.small
 		vStackView.axis = .vertical
-
 	}
 	private func configureProgrammingLanguageIcon() {
 		prorammingLanguageIcon.translatesAutoresizingMaskIntoConstraints = false
 		prorammingLanguageIcon.image = UIImage(systemName: "swift", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [.orange]))
-
 	}
 
 	private func configureProgrammingLanguageLabel() {
@@ -89,8 +87,6 @@ extension DeveloperSkillsView {
 		revealButton.configuration = .tinted()
 		revealButton.addTarget(self, action: #selector(revealButtonTapped), for: .touchUpInside)
 	}
-
-
 
 	private func setupViews() {
 		vStackView.addArrangedSubview(learningDuration)

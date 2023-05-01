@@ -16,8 +16,6 @@ class DeveloperSkillsViewController: UIViewController {
 		style()
 		skillsView.setDate(model: developerSkillsModel)
 	}
-
-
 }
 
 extension DeveloperSkillsViewController {

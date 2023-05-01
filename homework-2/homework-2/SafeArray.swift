@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SafeArray<T> {
+struct SafeArray<T: Equatable> {
 	private var elements: [T] = []
 	private let semaphore = DispatchSemaphore(value: 1)
 	
@@ -51,17 +51,23 @@ struct SafeArray<T> {
 		return elements[index]
 	}
 
-	func contains<T: Equatable> (_ item: T) -> Bool {
+	func contains(_ item: T) -> Bool {
 		semaphore.wait()
 		defer {
 			semaphore.signal()
 		}
-		return elements.contains { item == $0 as? T }
+		return elements.contains { item == $0 }
 	}
 }
 
 extension SafeArray: CustomStringConvertible {
 	var description: String {
 		"\(elements)"
+	}
+}
+
+extension SafeArray: Equatable {
+	static func == (lhs: SafeArray<T>, rhs: SafeArray<T>) -> Bool {
+		return lhs.elements == rhs.elements
 	}
 }

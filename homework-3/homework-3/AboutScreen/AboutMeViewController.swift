@@ -16,7 +16,6 @@ class AboutMeViewController: UIViewController {
 		style()
 		layout()
 		aboutMeView.setupData(aboutMe)
-		// Do any additional setup after loading the view.
 	}
 
 

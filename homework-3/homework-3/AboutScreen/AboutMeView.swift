@@ -8,7 +8,6 @@
 import UIKit
 
 class AboutMeView: UIView {
-	// информация о себе (имя/фамилия, возраст, образование, город проживания, родной город и т.д.
 
 	private let stackView = UIStackView()
 	private let imageView = UIImageView()

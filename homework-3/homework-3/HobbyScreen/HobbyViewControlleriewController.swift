@@ -38,8 +38,6 @@ class HobbyViewController: UIViewController {
 			setData(hobby: myHobbies[0])
 			changeButton.setTitle("Про футбол", for: .normal)
 		}
-//		print("buttonPressed")
 	}
-
 }
 

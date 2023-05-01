@@ -19,10 +19,10 @@ struct AboutMeViewModel {
 }
 
 let aboutMe = AboutMeViewModel(imageName: "me",
-						   firstName: "Kabulov",
-						   lastName: "Nursultan",
-						   middleName: "Pernebayevich",
+						   firstName: "Кабулов",
+						   lastName: "Нурсултан",
+						   middleName: "Пернебаевич",
 						   age: 25,
-						   city: "KAZAKHSTAN. ASTANA",
-						   degree: "ENU named after L.N.Gumilyov Automation and control",
-						   additionalInfo: "Родился в 1998 году в Узбекистане. В 19 лет поступил в ЕНУ им Л.Н.Гумилева в Астану. Сейчас работаю тестировщиком мобильных приложении.")
+						   city: "Казахстан. Астана",
+						   degree: "ЕНУ им Л.Н.Гумилева. Автоматизация и управление",
+						   additionalInfo: "Родился в 1998 году в Узбекистане. В 19 лет поступил в ЕНУ им Л.Н.Гумилева в Астане. Сейчас работаю тестировщиком мобильных приложений.")

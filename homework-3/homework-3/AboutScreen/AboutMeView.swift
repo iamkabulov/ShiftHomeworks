@@ -45,7 +45,7 @@ extension AboutMeView {
 		firstNameLabel.text = model.firstName
 		lastNameLabel.text = model.lastName
 		middleNameLabel.text = model.middleName
-		ageLabel.text = "\(model.age) years old"
+		ageLabel.text = "\(model.age) лет"
 		cityLabel.text = model.city
 		degreeLabel.text = model.degree
 		additionalInfoView.text = model.additionalInfo

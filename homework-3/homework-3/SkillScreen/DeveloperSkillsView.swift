@@ -33,17 +33,18 @@ class DeveloperSkillsView: UIView {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-}
 
-extension DeveloperSkillsView {
-
-	func setDate(model: DeveloperSkillsViewModel) {
+	func setupData(model: DeveloperSkillsViewModel) {
 		prorammingLanguageIcon.image = model.languageIcon
 		programmingLanguageLabel.text = model.languageName
 		learningDuration.text = model.learningDuration
 		skillsTextView.text = model.skills
 		wishLabel.text = model.wish
 	}
+}
+
+private extension DeveloperSkillsView {
+
 	private func makeConguredLabel(label: UILabel, font: UIFont.TextStyle) {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.font = UIFont.preferredFont(forTextStyle: font)

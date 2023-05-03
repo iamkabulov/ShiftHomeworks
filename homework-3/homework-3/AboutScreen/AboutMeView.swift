@@ -37,9 +37,7 @@ class AboutMeView: UIView {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-}
 
-extension AboutMeView {
 	func setupData(_ model: AboutMeViewModel) {
 		imageView.image = model.image
 		firstNameLabel.text = model.firstName
@@ -49,8 +47,10 @@ extension AboutMeView {
 		cityLabel.text = model.city
 		degreeLabel.text = model.degree
 		additionalInfoView.text = model.additionalInfo
-
 	}
+}
+
+private extension AboutMeView {
 
 	private func makeConguredLabel(label: UILabel, font: UIFont.TextStyle) {
 		label.translatesAutoresizingMaskIntoConstraints = false

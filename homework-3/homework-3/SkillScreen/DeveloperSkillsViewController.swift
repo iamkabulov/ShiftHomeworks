@@ -13,16 +13,19 @@ class DeveloperSkillsViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		style()
-		skillsView.setDate(model: DeveloperSkillsViewModel.defaultViewModel())
+		configureView()
+		setupView()
+		skillsView.setupData(model: DeveloperSkillsViewModel.defaultViewModel())
 	}
 }
 
-extension DeveloperSkillsViewController {
-	func style() {
+private extension DeveloperSkillsViewController {
+	func configureView() {
 		view.backgroundColor = .systemGray5
-		skillsView.translatesAutoresizingMaskIntoConstraints = false
+	}
 
+	func setupView() {
+		skillsView.translatesAutoresizingMaskIntoConstraints = false
 		view.addSubview(skillsView)
 		NSLayoutConstraint.activate([
 			skillsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

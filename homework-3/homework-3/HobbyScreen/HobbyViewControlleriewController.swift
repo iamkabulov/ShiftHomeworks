@@ -17,10 +17,10 @@ class HobbyViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		setData(hobby: HobbyViewModel.defaultViewModels()[0])
+		setupData(hobby: HobbyViewModel.defaultViewModels()[0])
 	}
 
-	func setData(hobby: HobbyViewModel) {
+	func setupData(hobby: HobbyViewModel) {
 		hobbyImageView.image = hobby.image
 		hobbyTextView.text = hobby.text
 		changeButton.setTitle(hobby.buttonTitle, for: .normal)
@@ -29,9 +29,9 @@ class HobbyViewController: UIViewController {
 
 	@IBAction func buttonPressed(_ sender: UIButton) {
 		if changeButton.currentTitle == "Про футбол" {
-			setData(hobby: HobbyViewModel.defaultViewModels()[1])
+			setupData(hobby: HobbyViewModel.defaultViewModels()[1])
 		} else {
-			setData(hobby: HobbyViewModel.defaultViewModels()[0])
+			setupData(hobby: HobbyViewModel.defaultViewModels()[0])
 		}
 	}
 }

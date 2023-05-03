@@ -13,21 +13,19 @@ class AboutMeViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		style()
-		layout()
+		configureView()
+		setupView()
 		aboutMeView.setupData(AboutMeViewModel.defaultViewModel())
 	}
-
-
 }
 
-extension AboutMeViewController {
-	func style() {
+private extension AboutMeViewController {
+	func configureView() {
 		view.backgroundColor = .systemGray5
-		aboutMeView.translatesAutoresizingMaskIntoConstraints = false
 	}
 
-	func layout() {
+	func setupView() {
+		aboutMeView.translatesAutoresizingMaskIntoConstraints = false
 		view.addSubview(aboutMeView)
 		NSLayoutConstraint.activate([
 			aboutMeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

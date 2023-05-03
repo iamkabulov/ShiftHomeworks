@@ -14,7 +14,7 @@ class DeveloperSkillsViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		style()
-		skillsView.setDate(model: developerSkillsModel)
+		skillsView.setDate(model: DeveloperSkillsViewModel.defaultViewModel())
 	}
 }
 

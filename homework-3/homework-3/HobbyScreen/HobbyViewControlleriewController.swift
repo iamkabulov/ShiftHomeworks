@@ -17,26 +17,21 @@ class HobbyViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		configureChangeButton()
-		setData(hobby: myHobbies[0])
+		setData(hobby: HobbyViewModel.defaultViewModels()[0])
 	}
 
 	func setData(hobby: HobbyViewModel) {
-		hobbyImageView.image = UIImage(named: hobby.imageName)
+		hobbyImageView.image = hobby.image
 		hobbyTextView.text = hobby.text
+		changeButton.setTitle(hobby.buttonTitle, for: .normal)
 	}
 
-	func configureChangeButton() {
-		changeButton.setTitle("Про футбол", for: .normal)
-	}
 
 	@IBAction func buttonPressed(_ sender: UIButton) {
-		if hobbyImageView.image == UIImage(named: "sailing") {
-			setData(hobby: myHobbies[1])
-			changeButton.setTitle("Про парусный спорт", for: .normal)
+		if changeButton.currentTitle == "Про футбол" {
+			setData(hobby: HobbyViewModel.defaultViewModels()[1])
 		} else {
-			setData(hobby: myHobbies[0])
-			changeButton.setTitle("Про футбол", for: .normal)
+			setData(hobby: HobbyViewModel.defaultViewModels()[0])
 		}
 	}
 }

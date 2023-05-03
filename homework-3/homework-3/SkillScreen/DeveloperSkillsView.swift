@@ -38,9 +38,9 @@ class DeveloperSkillsView: UIView {
 extension DeveloperSkillsView {
 
 	func setDate(model: DeveloperSkillsViewModel) {
-		prorammingLanguageIcon.image = UIImage(systemName: model.languageIcon, withConfiguration: UIImage.SymbolConfiguration(paletteColors: [.orange]))
+		prorammingLanguageIcon.image = model.languageIcon
 		programmingLanguageLabel.text = model.languageName
-		learningDuration.text = "Изучаю \(model.learningDuration) год"
+		learningDuration.text = model.learningDuration
 		skillsTextView.text = model.skills
 		wishLabel.text = model.wish
 	}
@@ -58,7 +58,6 @@ extension DeveloperSkillsView {
 	}
 	private func configureProgrammingLanguageIcon() {
 		prorammingLanguageIcon.translatesAutoresizingMaskIntoConstraints = false
-		prorammingLanguageIcon.image = UIImage(systemName: "swift", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [.orange]))
 	}
 
 	private func configureProgrammingLanguageLabel() {

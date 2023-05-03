@@ -41,11 +41,11 @@ class AboutMeView: UIView {
 
 extension AboutMeView {
 	func setupData(_ model: AboutMeViewModel) {
-		imageView.image = UIImage(named: model.imageName)
+		imageView.image = model.image
 		firstNameLabel.text = model.firstName
 		lastNameLabel.text = model.lastName
 		middleNameLabel.text = model.middleName
-		ageLabel.text = "\(model.age) лет"
+		ageLabel.text = model.age
 		cityLabel.text = model.city
 		degreeLabel.text = model.degree
 		additionalInfoView.text = model.additionalInfo

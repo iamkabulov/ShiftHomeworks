@@ -15,7 +15,7 @@ class AboutMeViewController: UIViewController {
 		super.viewDidLoad()
 		style()
 		layout()
-		aboutMeView.setupData(aboutMe)
+		aboutMeView.setupData(AboutMeViewModel.defaultViewModel())
 	}
 
 

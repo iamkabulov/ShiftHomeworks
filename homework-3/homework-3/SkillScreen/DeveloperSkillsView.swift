@@ -21,7 +21,6 @@ class DeveloperSkillsView: UIView {
 		super.init(frame: .zero)
 		backgroundColor = .systemGray5
 		setupViews()
-		configureProgrammingLanguageIcon()
 		configureProgrammingLanguageLabel()
 		configureLearningDuration()
 		configureSkillsLabel()
@@ -52,13 +51,9 @@ private extension DeveloperSkillsView {
 	}
 
 	private func configureStackView() {
-		vStackView.translatesAutoresizingMaskIntoConstraints = false
 		vStackView.distribution = .fill
 		vStackView.spacing = Metrics.Spacing.small
 		vStackView.axis = .vertical
-	}
-	private func configureProgrammingLanguageIcon() {
-		prorammingLanguageIcon.translatesAutoresizingMaskIntoConstraints = false
 	}
 
 	private func configureProgrammingLanguageLabel() {
@@ -70,7 +65,6 @@ private extension DeveloperSkillsView {
 	}
 
 	private func configureSkillsLabel() {
-		skillsTextView.translatesAutoresizingMaskIntoConstraints = false
 		skillsTextView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
 		skillsTextView.textColor = .black
 		skillsTextView.layer.cornerRadius = 5
@@ -82,13 +76,17 @@ private extension DeveloperSkillsView {
 	}
 
 	private func configureRevealButton() {
-		revealButton.translatesAutoresizingMaskIntoConstraints = false
 		revealButton.setTitle("Закрыть ожидания от обучения", for: .normal)
 		revealButton.configuration = .tinted()
 		revealButton.addTarget(self, action: #selector(revealButtonTapped), for: .touchUpInside)
 	}
 
 	private func setupViews() {
+		vStackView.translatesAutoresizingMaskIntoConstraints = false
+		prorammingLanguageIcon.translatesAutoresizingMaskIntoConstraints = false
+		skillsTextView.translatesAutoresizingMaskIntoConstraints = false
+		revealButton.translatesAutoresizingMaskIntoConstraints = false
+		
 		vStackView.addArrangedSubview(learningDuration)
 		vStackView.addArrangedSubview(skillsTextView)
 		vStackView.addArrangedSubview(wishLabel)

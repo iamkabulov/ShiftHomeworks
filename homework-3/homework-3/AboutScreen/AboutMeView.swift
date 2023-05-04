@@ -83,21 +83,18 @@ private extension AboutMeView {
 	}
 
 	private func configureImageView() {
-		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.contentMode = .scaleAspectFill
 		imageView.layer.cornerRadius = 5
 		imageView.clipsToBounds = true
 	}
 
 	private func configureStackView() {
-		stackView.translatesAutoresizingMaskIntoConstraints = false
 		stackView.distribution = .equalSpacing
 		stackView.axis = .vertical
 
 	}
 
 	private func configureTextView() {
-		additionalInfoView.translatesAutoresizingMaskIntoConstraints = false
 		additionalInfoView.layer.cornerRadius = 5
 		additionalInfoView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
 		additionalInfoView.textColor = .black
@@ -105,6 +102,10 @@ private extension AboutMeView {
 	}
 
 	private func setupViews() {
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		additionalInfoView.translatesAutoresizingMaskIntoConstraints = false
+		
 		stackView.addArrangedSubview(firstNameLabel)
 		stackView.addArrangedSubview(lastNameLabel)
 		stackView.addArrangedSubview(middleNameLabel)

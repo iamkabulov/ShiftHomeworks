@@ -14,7 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.makeKeyAndVisible()
-		window?.rootViewController = UINavigationController(rootViewController: FootballPlayersViewController())
+		let interactor = FootballPlayerInteractor()
+		let router = FootballPlayersRouter()
+		let presenter = FootballPlayerPresenter(interactor: interactor, router: router)
+		let vc = FootballPlayersViewController(presenter: presenter)
+		window?.rootViewController = UINavigationController(rootViewController: vc)
 
 		return true
 	}

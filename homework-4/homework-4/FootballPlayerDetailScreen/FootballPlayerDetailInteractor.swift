@@ -8,7 +8,7 @@
 import Foundation
 
 protocol IFootballPlayerDetailInteractor {
-	func load(index: Int) -> FootballPlayerDetailEntity
+	func load(index: Int?) -> FootballPlayerDetailEntity
 }
 
 final class FootballPlayerDetailInteractor {
@@ -17,7 +17,8 @@ final class FootballPlayerDetailInteractor {
 }
 
 extension FootballPlayerDetailInteractor: IFootballPlayerDetailInteractor {
-	func load(index: Int) -> FootballPlayerDetailEntity {
+	func load(index: Int?) -> FootballPlayerDetailEntity {
+		guard let index = index else { return FootballPlayerDetailEntity(with: FootballPlayersEntity.getDefaultModel()[0])}
 		return FootballPlayerDetailEntity(with: FootballPlayersEntity.getDefaultModel()[index])
 	}
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FootballPlayerContractViewController: UIViewController {
+final class FootballPlayerContractViewController: UIViewController {
 
 	private let contractView = FootballPlayerContractView()
 	var presenter: IFootballPlayerContractPresenter

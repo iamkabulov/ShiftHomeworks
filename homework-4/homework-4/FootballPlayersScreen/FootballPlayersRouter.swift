@@ -19,10 +19,9 @@ final class FootballPlayersRouter {
 extension FootballPlayersRouter: IFootballPlayersRouter
 {
 	func nextModule(vc: UIViewController, itemIndex: Int) {
-		let interactor = FootballPlayerDetailInteractor()
-		let router = FootballPlayerDetailRouter()
-		let presenter = FootballPlayerDetailPresenter(interactor: interactor, router: router, itemIndex: itemIndex)
-		let detailVC = FootballPlayerDetailViewController(presenter: presenter)
+		let module = FootballPlayerDatailModuleBuilder()
+		module.getId(itemIndex)
+		let detailVC = module.build()
 		vc.navigationController?.pushViewController(detailVC, animated: true)
 	}
 }

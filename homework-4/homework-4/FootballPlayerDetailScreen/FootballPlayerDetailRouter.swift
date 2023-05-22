@@ -19,15 +19,9 @@ final class FootballPlayerDetailRouter {
 extension FootballPlayerDetailRouter: IFootballPlayerDetailRouter
 {
 	func nextModule(vc: UIViewController, model: FootballPlayerDetailEntity) {
-		let interactor = FootballPlayerContractInteractor()
-		let router = FootballPlayerContractRouter()
-		let presenter = FootballPlayerContractPresenter(interactor: interactor, router: router, model: model)
-		let sheetsVC = FootballPlayerContractViewController(presenter: presenter)
-		if let sheet = sheetsVC.sheetPresentationController {
-			sheet.detents = [.custom(resolver: { _ in
-				return 200
-			})]
-		}
+		let footballPlayerContractBuilder = FootballPlayerContractModuleBuilder()
+		footballPlayerContractBuilder.getModel(model)
+		let sheetsVC = footballPlayerContractBuilder.build()
 		vc.present(sheetsVC, animated: true)
 	}
 }

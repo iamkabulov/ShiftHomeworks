@@ -18,6 +18,7 @@
 		B05333732A13EE8D001B7524 /* FootballPlayerContractInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05333722A13EE8D001B7524 /* FootballPlayerContractInteractor.swift */; };
 		B05333752A13EEC7001B7524 /* FootballPlayerContractRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05333742A13EEC7001B7524 /* FootballPlayerContractRouter.swift */; };
 		B08C0EB12A1B92800001089C /* FootballPlayersData.json in Resources */ = {isa = PBXBuildFile; fileRef = B08C0EB02A1B92800001089C /* FootballPlayersData.json */; };
+		B08C0EB32A1D176B0001089C /* LabelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08C0EB22A1D176B0001089C /* LabelBuilder.swift */; };
 		B0CA38512A093BBA00779CD0 /* FootballPlayerContractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CA38502A093BB900779CD0 /* FootballPlayerContractView.swift */; };
 		B0CA38532A0942D300779CD0 /* FootballPlayerContractEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CA38522A0942D300779CD0 /* FootballPlayerContractEntity.swift */; };
 		B0F353302A06D75C002E8C62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F3532F2A06D75C002E8C62 /* AppDelegate.swift */; };
@@ -45,6 +46,7 @@
 		B05333722A13EE8D001B7524 /* FootballPlayerContractInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootballPlayerContractInteractor.swift; sourceTree = "<group>"; };
 		B05333742A13EEC7001B7524 /* FootballPlayerContractRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootballPlayerContractRouter.swift; sourceTree = "<group>"; };
 		B08C0EB02A1B92800001089C /* FootballPlayersData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FootballPlayersData.json; sourceTree = "<group>"; };
+		B08C0EB22A1D176B0001089C /* LabelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelBuilder.swift; sourceTree = "<group>"; };
 		B0CA38502A093BB900779CD0 /* FootballPlayerContractView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootballPlayerContractView.swift; sourceTree = "<group>"; };
 		B0CA38522A0942D300779CD0 /* FootballPlayerContractEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootballPlayerContractEntity.swift; sourceTree = "<group>"; };
 		B0F3532C2A06D75C002E8C62 /* homework-4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "homework-4.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +126,7 @@
 				B0F353502A0789F3002E8C62 /* FootballPlayerContractScreen */,
 				B0F3534B2A06E5EE002E8C62 /* FootballPlayerDetailScreen */,
 				B0F353432A06D9BE002E8C62 /* FootballPlayersScreen */,
+				B08C0EB22A1D176B0001089C /* LabelBuilder.swift */,
 				B0F353382A06D75E002E8C62 /* Assets.xcassets */,
 				B0F3533A2A06D75E002E8C62 /* LaunchScreen.storyboard */,
 				B0F3533D2A06D75E002E8C62 /* Info.plist */,
@@ -249,6 +252,7 @@
 				B05333672A11102C001B7524 /* FootballPlayersRouter.swift in Sources */,
 				B0F353522A078A55002E8C62 /* FootbalPlayerContractViewController.swift in Sources */,
 				B0CA38512A093BBA00779CD0 /* FootballPlayerContractView.swift in Sources */,
+				B08C0EB32A1D176B0001089C /* LabelBuilder.swift in Sources */,
 				B05333752A13EEC7001B7524 /* FootballPlayerContractRouter.swift in Sources */,
 				B0CA38532A0942D300779CD0 /* FootballPlayerContractEntity.swift in Sources */,
 				B0F3534A2A06DFD9002E8C62 /* FootballPlayersEntity.swift in Sources */,

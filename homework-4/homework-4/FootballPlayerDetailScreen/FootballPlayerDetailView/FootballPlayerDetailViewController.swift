@@ -8,6 +8,7 @@
 import UIKit
 
 final class FootballPlayerDetailViewController: UIViewController {
+
 	private enum Metrics {
 		enum Spacing {
 			static let small: CGFloat = 8
@@ -15,7 +16,7 @@ final class FootballPlayerDetailViewController: UIViewController {
 	}
 
 	private let footballPlayerDetailView = FootballPlayerDetailView(frame: .zero)
-	var presenter: IFootballPlayerDetailPresenter
+	private var presenter: IFootballPlayerDetailPresenter
 
 	init(presenter: IFootballPlayerDetailPresenter) {
 		self.presenter = presenter
@@ -25,20 +26,14 @@ final class FootballPlayerDetailViewController: UIViewController {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+	override func loadView() {
+		super.loadView()
+		self.view = self.footballPlayerDetailView
+	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.view.backgroundColor = .secondarySystemBackground
 		self.presenter.viewDidLoad(ui: self.footballPlayerDetailView, vc: self)
-		self.setupViews()
-	}
-	
-	func setupViews() {
-		view.addSubview(footballPlayerDetailView)
-		footballPlayerDetailView.snp.makeConstraints { make in
-			make.edges.equalTo(view.safeAreaLayoutGuide).inset(Metrics.Spacing.small)
-		}
-
 	}
 }
 

@@ -7,10 +7,10 @@
 
 import UIKit
 
-class FootballPlayerContractViewController: UIViewController {
+final class FootballPlayerContractViewController: UIViewController {
 
 	private let contractView = FootballPlayerContractView()
-	var presenter: IFootballPlayerContractPresenter
+	private var presenter: IFootballPlayerContractPresenter
 
 	init(presenter: IFootballPlayerContractPresenter) {
 		self.presenter = presenter
@@ -21,20 +21,14 @@ class FootballPlayerContractViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	override func loadView() {
+		super.loadView()
+		self.view = self.contractView
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.presenter.viewDidLoad(ui: self.contractView,
 								   vc: self)
-		view.backgroundColor = .systemBackground
-		setupView()
-	}
-}
-
-extension FootballPlayerContractViewController {
-	func setupView() {
-		view.addSubview(contractView)
-		contractView.snp.makeConstraints { make in
-			make.edges.equalToSuperview()
-		}
 	}
 }

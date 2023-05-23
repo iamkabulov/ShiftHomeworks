@@ -27,11 +27,31 @@ final class FootballPlayerDetailView: UIView {
 	}
 
 	private let vStackView = UIStackView()
-	private let clubLabel = UILabel()
 	private let imageView = UIImageView()
-	private let nationalTeamLabel = UILabel()
-	private let numberLabel = UILabel()
-	private let statsLabel = UILabel()
+	private let clubLabel = LabelBuilder()
+		.cornerRaduis(5)
+		.numberOfLines(0)
+		.font(.body)
+		.build()
+
+	private let nationalTeamLabel = LabelBuilder()
+		.cornerRaduis(5)
+		.numberOfLines(0)
+		.font(.body)
+		.build()
+
+	private let numberLabel = LabelBuilder()
+		.cornerRaduis(5)
+		.numberOfLines(0)
+		.font(.body)
+		.build()
+
+	private let statsLabel = LabelBuilder()
+		.cornerRaduis(5)
+		.numberOfLines(0)
+		.font(.body)
+		.build()
+
 	private let bioTextView = UITextView()
 	private let contractButton = UIButton(type: .roundedRect)
 	
@@ -39,11 +59,8 @@ final class FootballPlayerDetailView: UIView {
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
+		backgroundColor = .secondarySystemBackground
 		configureImageView()
-		configureNumberLabel()
-		configureClubLabel()
-		configureNationalTeamLabel()
-		configureStatsLabel()
 		configureBioTextView()
 		configureStackView()
 		configureButton()
@@ -60,11 +77,12 @@ final class FootballPlayerDetailView: UIView {
 	}
 }
 
+//MARK: - Extension
 extension FootballPlayerDetailView: IFootballPlayerDetailView {
 	func set(model: FootballPlayerDetailEntity) {
 		clubLabel.text = model.getClub()
 		numberLabel.text = model.getNumber()
-		imageView.image = model.image
+		imageView.image = UIImage(named: "\(model.image)")
 		statsLabel.text = model.getStats()
 		nationalTeamLabel.text = model.getNationalTeam()
 		bioTextView.text = model.bio
@@ -72,27 +90,6 @@ extension FootballPlayerDetailView: IFootballPlayerDetailView {
 }
 
 private extension FootballPlayerDetailView {
-	func makeConfiguredLabel(label: UILabel, font: UIFont.TextStyle) {
-		label.layer.cornerRadius = 5
-		label.font = UIFont.preferredFont(forTextStyle: font)
-		label.numberOfLines = 0
-	}
-
-	func configureClubLabel() {
-		makeConfiguredLabel(label: clubLabel, font: .body)
-	}
-
-	func configureNationalTeamLabel() {
-		makeConfiguredLabel(label: nationalTeamLabel, font: .body)
-	}
-
-	func configureNumberLabel() {
-		makeConfiguredLabel(label: numberLabel, font: .body)
-	}
-
-	func configureStatsLabel() {
-		makeConfiguredLabel(label: statsLabel, font: .body)
-	}
 
 	func configureBioTextView() {
 		bioTextView.layer.cornerRadius = 5
@@ -112,7 +109,6 @@ private extension FootballPlayerDetailView {
 		vStackView.axis = .vertical
 		vStackView.distribution = .equalSpacing
 		vStackView.spacing = 5
-
 	}
 
 	func configureButton() {
@@ -134,29 +130,29 @@ private extension FootballPlayerDetailView {
 		addSubview(contractButton)
 
 		imageView.snp.makeConstraints { make in
-			make.top.equalToSuperview()
-			make.leading.equalToSuperview()
+			make.top.equalTo(safeAreaLayoutGuide.snp.top)
+			make.leading.equalTo(snp.leading).inset(Metrics.Spacing.small)
 			make.height.equalTo(Metrics.height)
 			make.width.equalTo(Metrics.width)
 		}
 
 		bioTextView.snp.makeConstraints { make in
 			make.top.equalTo(imageView.snp.bottom).offset(Metrics.Spacing.small)
-			make.leading.equalToSuperview()
-			make.trailing.equalToSuperview()
+			make.leading.equalTo(snp.leading).inset(Metrics.Spacing.small)
+			make.trailing.equalTo(snp.trailing).inset(Metrics.Spacing.small)
 		}
 
 		vStackView.snp.makeConstraints { make in
-			make.top.equalToSuperview()
+			make.top.equalTo(safeAreaLayoutGuide.snp.top)
 			make.leading.equalTo(imageView.snp.trailing).offset(Metrics.Spacing.medium)
 			make.trailing.equalToSuperview()
 		}
 
 		contractButton.snp.makeConstraints { make in
 			make.top.equalTo(bioTextView.snp.bottom).offset(Metrics.Spacing.small)
-			make.leading.equalToSuperview()
-			make.trailing.equalToSuperview()
-			make.bottom.equalToSuperview()
+			make.leading.equalTo(snp.leading).inset(Metrics.Spacing.small)
+			make.trailing.equalTo(snp.trailing).inset(Metrics.Spacing.small)
+			make.bottom.equalTo(snp.bottom).inset(Metrics.Spacing.small)
 		}
 	}
 }

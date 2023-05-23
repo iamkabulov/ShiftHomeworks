@@ -9,8 +9,8 @@ import UIKit
 
 final class FootballPlayersViewController: UIViewController {
 
-	private let uiView = FootballPlayersView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-	var presenter: IFootballPlayerPresenter
+	private let playersView = FootballPlayersView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+	private var presenter: IFootballPlayerPresenter
 
 	init(presenter: IFootballPlayerPresenter) {
 		self.presenter = presenter
@@ -21,25 +21,13 @@ final class FootballPlayersViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		self.presenter.viewDidLoad(ui: self.uiView, vc: self)
-		self.setupView()
-		view.backgroundColor = .systemBackground
-		title = "Footballers"
-	}
-}
-
-extension FootballPlayersViewController {
-
-	func setupView() {
-		view.addSubview(uiView)
-		uiView.snp.makeConstraints { make in
-			make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-			make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
-			make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-			make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-		}
+	override func loadView() {
+		super.loadView()
+		self.view = self.playersView
 	}
 	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		self.presenter.viewDidLoad(ui: self.playersView, vc: self)
+	}
 }

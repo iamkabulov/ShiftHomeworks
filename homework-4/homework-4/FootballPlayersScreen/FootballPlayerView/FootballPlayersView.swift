@@ -7,9 +7,8 @@
 
 import UIKit
 
-protocol IFootballPlayersView: AnyObject
-{
-	var tapButtonHandler: ((Int) -> Void)? { get set }
+protocol IFootballPlayersView: AnyObject {
+	var tapButtonHandler: ((String) -> Void)? { get set }
 	func set(model: [FootballPlayersEntity])
 }
 
@@ -26,18 +25,21 @@ final class FootballPlayersView: UICollectionView {
 		}
 	}
 
-	var tapButtonHandler: ((Int) -> Void)?
+	var tapButtonHandler: ((String) -> Void)?
 	private var model = [FootballPlayersEntity]()
+
 	private var footballerCollectionView = {
 		let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
 		let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 		collectionView.collectionViewLayout = layout
+		collectionView.backgroundColor = .secondarySystemBackground
 		return collectionView
 	}()
 	
 	override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
 		super.init(frame: frame, collectionViewLayout: layout)
-		configureViewController()
+		backgroundColor = .secondarySystemBackground
+		configureView()
 		setupView()
 	}
 
@@ -45,6 +47,8 @@ final class FootballPlayersView: UICollectionView {
 		fatalError("init(coder:) has not been implemented")
 	}
 }
+
+//MARK: - Extension
 extension FootballPlayersView: IFootballPlayersView {
 	func set(model: [FootballPlayersEntity]) {
 		self.model = model
@@ -52,7 +56,7 @@ extension FootballPlayersView: IFootballPlayersView {
 }
 
 private extension FootballPlayersView {
-	func configureViewController() {
+	func configureView() {
 		footballerCollectionView.register(FootballPlayerCell.self,
 							 forCellWithReuseIdentifier: FootballPlayerCell.identifier)
 		footballerCollectionView.delegate = self
@@ -73,7 +77,8 @@ private extension FootballPlayersView {
 extension FootballPlayersView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		self.tapButtonHandler?(indexPath.item)
+		let name = model[indexPath.item].name
+		self.tapButtonHandler?(name)
 	}
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

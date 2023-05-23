@@ -25,13 +25,19 @@ final class FootballPlayerContractView: UIView {
 	var closeTappedHandler: (() -> Void)?
 
 	private let closeButton = UIButton(type: .roundedRect)
-	private let costLabel = UILabel()
-	private let contractLabel = UILabel()
+	private let costLabel = LabelBuilder()
+		.font(.body)
+		.cornerRaduis(0)
+		.build()
+
+	private let contractLabel = LabelBuilder()
+		.font(.body)
+		.cornerRaduis(0)
+		.build()
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		configureCostLabel()
-		configureContractLabel()
+		self.backgroundColor = .secondarySystemBackground
 		configureCloseButton()
 		setupUI()
 	}
@@ -45,7 +51,10 @@ final class FootballPlayerContractView: UIView {
 		self.closeTappedHandler?()
 	}
 }
+
+//MARK: - Extension
 extension FootballPlayerContractView: IFootballPlayerContractView {
+
 	func set(model: FootballPlayerContractEntity) {
 		costLabel.text = model.getCost()
 		contractLabel.text = model.getContract()
@@ -53,19 +62,6 @@ extension FootballPlayerContractView: IFootballPlayerContractView {
 }
 
 private extension FootballPlayerContractView {
-	func configureCostLabel() {
-		makeConfiguredLabel(label: costLabel, font: .body)
-	}
-
-	func configureContractLabel() {
-		makeConfiguredLabel(label: contractLabel, font: .body)
-	}
-
-	func makeConfiguredLabel(label: UILabel, font: UIFont.TextStyle) {
-		label.backgroundColor = .white
-		label.layer.cornerRadius = 5
-		label.font = UIFont.preferredFont(forTextStyle: font)
-	}
 
 	func configureCloseButton() {
 		closeButton.setTitle("Close", for: .normal)

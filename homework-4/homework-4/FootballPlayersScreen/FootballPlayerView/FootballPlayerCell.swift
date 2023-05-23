@@ -23,7 +23,11 @@ final class FootballPlayerCell: UICollectionViewCell {
 
 	static let identifier = "collectionViewId"
 	private let stackView = UIStackView()
-	private let label = UILabel()
+	private let label = LabelBuilder()
+		.font(.body)
+		.textAlignment(.center)
+		.build()
+
 	private let imageView = UIImageView()
 
 
@@ -32,8 +36,6 @@ final class FootballPlayerCell: UICollectionViewCell {
 		setupViews()
 		configureStackView()
 		configureImageView()
-		configureNameLabel()
-
 	}
 
 	required init?(coder: NSCoder) {
@@ -44,15 +46,11 @@ final class FootballPlayerCell: UICollectionViewCell {
 extension FootballPlayerCell: IFootballPlayerCell {
 	func set(model: FootballPlayerCellModel) {
 		label.text = model.name
-		imageView.image = model.image
+		imageView.image = UIImage(named: "\(model.image)")
 	}
 }
 
 private extension FootballPlayerCell {
-	func configureNameLabel() {
-		label.font = UIFont.preferredFont(forTextStyle: .body)
-		label.textAlignment = .center
-	}
 
 	func configureImageView() {
 		imageView.layer.cornerRadius = 5

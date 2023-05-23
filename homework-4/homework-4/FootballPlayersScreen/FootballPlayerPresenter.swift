@@ -12,11 +12,11 @@ protocol IFootballPlayerPresenter: AnyObject {
 }
 
 final class FootballPlayerPresenter {
-
+	
 	weak var ui: IFootballPlayersView?
 	private let interactor: IFootballPlayerInteractor
 	private let router: IFootballPlayersRouter
-
+	
 	init(interactor: IFootballPlayerInteractor, router: IFootballPlayersRouter) {
 		self.interactor = interactor
 		self.router = router

@@ -13,13 +13,13 @@ protocol IFootballPlayerDetailInteractor {
 }
 
 final class FootballPlayerDetailInteractor {
-
+	
 	weak var presenter: FootballPlayerDetailPresenter?
 	var footballPlayerDetail: FootballPlayerDetailEntity?
 }
 
 extension FootballPlayerDetailInteractor: IFootballPlayerDetailInteractor {
-
+	
 	func load(name: String) -> FootballPlayerDetailEntity? {
 		guard let fileURL = Bundle.main.url(forResource: "FootballPlayersData", withExtension: "json") else {
 			fatalError("Не удалось найти файл")

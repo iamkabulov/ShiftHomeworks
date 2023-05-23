@@ -8,7 +8,7 @@
 import UIKit
 
 protocol IFootballPlayerContractRouter {
-
+	
 }
 
 final class FootballPlayerContractRouter {
@@ -16,5 +16,5 @@ final class FootballPlayerContractRouter {
 }
 
 extension FootballPlayerContractRouter: IFootballPlayerContractRouter {
-
+	
 }

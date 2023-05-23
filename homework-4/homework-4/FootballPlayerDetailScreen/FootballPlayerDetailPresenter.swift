@@ -12,12 +12,12 @@ protocol IFootballPlayerDetailPresenter: AnyObject {
 }
 
 final class FootballPlayerDetailPresenter {
-
+	
 	weak var ui: IFootballPlayerDetailView?
 	private var model: FootballPlayerDetailEntity?
 	private let interactor: IFootballPlayerDetailInteractor
 	private let router: IFootballPlayerDetailRouter
-
+	
 	init(interactor: IFootballPlayerDetailInteractor, router: IFootballPlayerDetailRouter, name: String) {
 		self.interactor = interactor
 		self.router = router
@@ -36,6 +36,4 @@ extension FootballPlayerDetailPresenter: IFootballPlayerDetailPresenter {
 									model: model)
 		}
 	}
-
-
 }

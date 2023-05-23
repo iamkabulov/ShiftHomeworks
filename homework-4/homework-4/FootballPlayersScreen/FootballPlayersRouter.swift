@@ -12,11 +12,11 @@ protocol IFootballPlayersRouter: AnyObject {
 }
 
 final class FootballPlayersRouter {
-
+	
 }
 
 extension FootballPlayersRouter: IFootballPlayersRouter {
-
+	
 	func nextModule(vc: UIViewController, name: String) {
 		let interactor = FootballPlayerDetailInteractor()
 		let router = FootballPlayerDetailRouter()

@@ -20,24 +20,23 @@ final class FootballPlayerCell: UICollectionViewCell {
 		static let width: CGFloat = 100
 	}
 	var cellDataLoadHandler: (() -> Void)?
-
+	
 	static let identifier = "collectionViewId"
 	private let stackView = UIStackView()
 	private let label = LabelBuilder()
 		.font(.body)
 		.textAlignment(.center)
 		.build()
-
+	
 	private let imageView = UIImageView()
-
-
+	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setupViews()
 		configureStackView()
 		configureImageView()
 	}
-
+	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -51,28 +50,28 @@ extension FootballPlayerCell: IFootballPlayerCell {
 }
 
 private extension FootballPlayerCell {
-
+	
 	func configureImageView() {
 		imageView.layer.cornerRadius = 5
 		imageView.contentMode = .scaleAspectFill
 		imageView.clipsToBounds = true
 	}
-
+	
 	func configureStackView() {
 		stackView.axis = .vertical
 		stackView.distribution = .fillProportionally
 		stackView.spacing = 4
 	}
-
+	
 	func setupViews() {
 		stackView.addArrangedSubview(imageView)
 		stackView.addArrangedSubview(label)
 		contentView.addSubview(stackView)
-
+		
 		stackView.snp.makeConstraints { make in
 			make.edges.equalToSuperview()
 		}
-
+		
 		imageView.snp.makeConstraints { make in
 			make.height.equalTo(Metrics.height)
 			make.width.equalTo(Metrics.width)

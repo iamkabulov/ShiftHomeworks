@@ -16,5 +16,5 @@ final class FootballPlayerContractInteractor {
 }
 
 extension FootballPlayerContractInteractor: IFootballPlayerContractInteractor {
-
+	
 }

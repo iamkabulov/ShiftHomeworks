@@ -12,6 +12,7 @@ protocol IFootballPlayerContractPresenter {
 }
 
 final class FootballPlayerContractPresenter {
+
 	weak var ui: IFootballPlayerContractView?
 	private let interactor: IFootballPlayerContractInteractor
 	private let router: IFootballPlayerContractRouter

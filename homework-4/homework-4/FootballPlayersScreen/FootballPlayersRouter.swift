@@ -7,21 +7,20 @@
 
 import UIKit
 
-protocol IFootballPlayersRouter: AnyObject
-{
-	func nextModule(vc: UIViewController, itemIndex: Int)
+protocol IFootballPlayersRouter: AnyObject {
+	func nextModule(vc: UIViewController, name: String)
 }
 
 final class FootballPlayersRouter {
 
 }
 
-extension FootballPlayersRouter: IFootballPlayersRouter
-{
-	func nextModule(vc: UIViewController, itemIndex: Int) {
+extension FootballPlayersRouter: IFootballPlayersRouter {
+
+	func nextModule(vc: UIViewController, name: String) {
 		let interactor = FootballPlayerDetailInteractor()
 		let router = FootballPlayerDetailRouter()
-		let presenter = FootballPlayerDetailPresenter(interactor: interactor, router: router, itemIndex: itemIndex)
+		let presenter = FootballPlayerDetailPresenter(interactor: interactor, router: router, name: name)
 		let detailVC = FootballPlayerDetailViewController(presenter: presenter)
 		vc.navigationController?.pushViewController(detailVC, animated: true)
 	}

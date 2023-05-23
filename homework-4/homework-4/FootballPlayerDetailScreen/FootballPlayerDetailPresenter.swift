@@ -18,10 +18,10 @@ final class FootballPlayerDetailPresenter {
 	private let interactor: IFootballPlayerDetailInteractor
 	private let router: IFootballPlayerDetailRouter
 
-	init(interactor: IFootballPlayerDetailInteractor, router: IFootballPlayerDetailRouter, itemIndex: Int) {
+	init(interactor: IFootballPlayerDetailInteractor, router: IFootballPlayerDetailRouter, name: String) {
 		self.interactor = interactor
 		self.router = router
-		self.model = self.interactor.load(index: itemIndex)
+		self.model = self.interactor.load(name: name)
 	}
 }
 

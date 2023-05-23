@@ -8,7 +8,7 @@
 import Foundation
 
 protocol IFootballPlayerInteractor {
-	func load() -> [FootballPlayersEntity]
+	func load() -> [FootballPlayersEntity]?
 }
 
 final class FootballPlayerInteractor {
@@ -17,7 +17,23 @@ final class FootballPlayerInteractor {
 }
 
 extension FootballPlayerInteractor: IFootballPlayerInteractor {
-	func load() -> [FootballPlayersEntity] {
-		FootballPlayersEntity.getDefaultModel()
+
+	func load() -> [FootballPlayersEntity]? {
+		var players = [FootballPlayersEntity]()
+		guard let fileURL = Bundle.main.url(forResource: "FootballPlayersData", withExtension: "json") else {
+			fatalError("Не удалось найти файл")
+		}
+
+		do {
+			let jsonData = try Data(contentsOf: fileURL)
+			let decoder = JSONDecoder()
+			let data = try decoder.decode([FootballPlayersEntity].self, from: jsonData)
+			players = data
+
+		} catch {
+			fatalError("Не удалось прочитать файл")
+		}
+		return players
 	}
 }
+

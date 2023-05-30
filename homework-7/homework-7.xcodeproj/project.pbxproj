@@ -18,6 +18,8 @@
 		B0642E462A20B6D20017D483 /* ImagesListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0642E452A20B6D20017D483 /* ImagesListRouter.swift */; };
 		B0642E482A20B7000017D483 /* ImagesListInteractor+Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0642E472A20B7000017D483 /* ImagesListInteractor+Networking.swift */; };
 		B0642E4A2A20B7850017D483 /* ImagesListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0642E492A20B7850017D483 /* ImagesListCellView.swift */; };
+		B0642E4C2A20E1D60017D483 /* ImagesListLoadingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0642E4B2A20E1D60017D483 /* ImagesListLoadingCellView.swift */; };
+		B0642E502A2111D40017D483 /* ImagesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0642E4F2A2111D40017D483 /* ImagesListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		B0642E452A20B6D20017D483 /* ImagesListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListRouter.swift; sourceTree = "<group>"; };
 		B0642E472A20B7000017D483 /* ImagesListInteractor+Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagesListInteractor+Networking.swift"; sourceTree = "<group>"; };
 		B0642E492A20B7850017D483 /* ImagesListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCellView.swift; sourceTree = "<group>"; };
+		B0642E4B2A20E1D60017D483 /* ImagesListLoadingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListLoadingCellView.swift; sourceTree = "<group>"; };
+		B0642E4F2A2111D40017D483 /* ImagesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,15 +91,25 @@
 		B0642E3E2A20B50D0017D483 /* ImagesList */ = {
 			isa = PBXGroup;
 			children = (
-				B0642E492A20B7850017D483 /* ImagesListCellView.swift */,
-				B0642E2D2A20B3440017D483 /* ImagesListViewController.swift */,
+				B09535C72A25E2DE00D7531C /* ImagesListView */,
 				B0642E3F2A20B5F20017D483 /* ImagesListEntity.swift */,
 				B0642E412A20B6800017D483 /* ImagesListInteractor.swift */,
+				B0642E472A20B7000017D483 /* ImagesListInteractor+Networking.swift */,
 				B0642E432A20B6960017D483 /* ImagesListPresenter.swift */,
 				B0642E452A20B6D20017D483 /* ImagesListRouter.swift */,
-				B0642E472A20B7000017D483 /* ImagesListInteractor+Networking.swift */,
 			);
 			name = ImagesList;
+			sourceTree = "<group>";
+		};
+		B09535C72A25E2DE00D7531C /* ImagesListView */ = {
+			isa = PBXGroup;
+			children = (
+				B0642E4B2A20E1D60017D483 /* ImagesListLoadingCellView.swift */,
+				B0642E492A20B7850017D483 /* ImagesListCellView.swift */,
+				B0642E4F2A2111D40017D483 /* ImagesListView.swift */,
+				B0642E2D2A20B3440017D483 /* ImagesListViewController.swift */,
+			);
+			name = ImagesListView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,6 +183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0642E482A20B7000017D483 /* ImagesListInteractor+Networking.swift in Sources */,
+				B0642E502A2111D40017D483 /* ImagesListView.swift in Sources */,
 				B0642E462A20B6D20017D483 /* ImagesListRouter.swift in Sources */,
 				B0642E402A20B5F20017D483 /* ImagesListEntity.swift in Sources */,
 				B0642E2E2A20B3440017D483 /* ImagesListViewController.swift in Sources */,
@@ -177,6 +192,7 @@
 				B0642E442A20B6960017D483 /* ImagesListPresenter.swift in Sources */,
 				B0642E2C2A20B3440017D483 /* SceneDelegate.swift in Sources */,
 				B0642E4A2A20B7850017D483 /* ImagesListCellView.swift in Sources */,
+				B0642E4C2A20E1D60017D483 /* ImagesListLoadingCellView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -70,11 +70,9 @@ extension ImagesListView: UITableViewDelegate, IImagesListView {
 		}
 	}
 
-
 	func loadingFailed(url: String) {
 		self.models = models.filter { $0.url != url }
 	}
-
 
 	func startLoad(url: String) {
 		models.append(ImagesListEntity(url: url))
@@ -91,7 +89,6 @@ extension ImagesListView: UITableViewDelegate, IImagesListView {
 	func reload() {
 		self.tableView.reloadData()
 	}
-
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)

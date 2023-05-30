@@ -53,12 +53,10 @@ extension ImagesListInteractor: IImagesListInteractor {
 	}
 
 	func pauseLoadImage(url: String) {
-		print(url + " pause ")
 		self.network.pauseDownload(url)
 	}
 
 	func resumeLoadImage(url: String) {
-		print(url + " resume ")
 		self.network.resumeDownload(url)
 	}
 }

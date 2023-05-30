@@ -27,7 +27,6 @@ final class ImagesListInteractorNetworking: NSObject {
 	}
 	func getImageByUrl(_ url: String) {
 		if resumeDatas.contains(where: { $0.key == url }) {
-			print(resumeDatas)
 			delegate?.imageDownloadFailed(url: url, with: NetworkError.alreadyExist)
 		} else {
 			if let urlString = URL(string: url) {
@@ -49,7 +48,7 @@ final class ImagesListInteractorNetworking: NSObject {
 	func resumeDownload(_ url: String) {
 		if let resumeData = resumeDatas[url], let resumeData = resumeData {
 			downloadTask = urlSession.downloadTask(withResumeData: resumeData)
-			self.resumeDatas[url] = nil // Очищаем данные возобновления
+			self.resumeDatas[url] = nil
 			downloadTask?.resume()
 		}
 	}

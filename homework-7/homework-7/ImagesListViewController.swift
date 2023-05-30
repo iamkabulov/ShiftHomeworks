@@ -19,7 +19,6 @@ final class ImagesListViewController: UIViewController {
 	private let tableView = ImagesListView(frame: .zero, style: .plain)
 	private var presenter: ImagesListPresenter
 	
-
 	init(presenter: ImagesListPresenter) {
 		self.presenter = presenter
 		super.init(nibName: nil, bundle: nil)
@@ -34,10 +33,8 @@ final class ImagesListViewController: UIViewController {
 		self.view = self.tableView
 		self.search.searchBar.delegate = self
 		self.navigationItem.searchController = self.search
-		search.searchBar.text = "https://img3.akspic.ru/crops/3/4/4/3/7/173443/173443-besplatnyj_minimalist-ubuntu-minimalizm-tsvetnoy-linkin_park-7680x4320.jpg"
-
-//		"https://img3.akspic.ru/crops/3/4/4/3/7/173443/173443-besplatnyj_minimalist-ubuntu-minimalizm-tsvetnoy-linkin_park-7680x4320.jpg"
 	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.presenter.viewDidLoad(tableView: self.tableView, viewController: self)

@@ -44,7 +44,6 @@ extension ImagesListLoadingCellView: IImagesListLoadingCellView {
 		return false
 	}
 
-
 	func startAnimating() {
 		spinner.startAnimating()
 		button.setTitle("Pause", for: .normal)
@@ -54,7 +53,6 @@ extension ImagesListLoadingCellView: IImagesListLoadingCellView {
 		spinner.stopAnimating()
 		button.setTitle("Continue", for: .normal)
 	}
-
 
 	func configureButton() {
 		button.setTitle("Pause", for: .normal)

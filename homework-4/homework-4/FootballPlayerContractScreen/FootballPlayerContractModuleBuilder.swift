@@ -7,30 +7,56 @@
 
 import UIKit
 
-protocol IFootballPlayerContractModuleBuilder {
-	func getModel(_ model: FootballPlayerDetailEntity)
+final class FootballPlayerContractModuleBuilder {
+	
+	private enum ModuleBuilderError: Error {
+		case interactorNil
+		case routerNil
+		case modelNil
+	}
+
+	private var model: FootballPlayerDetailEntity?
+	private var interactor: FootballPlayerContractInteractor?
+	private var router: FootballPlayerContractRouter?
 }
 
-final class FootballPlayerContractModuleBuilder {
-	var model: FootballPlayerDetailEntity?
+extension FootballPlayerContractModuleBuilder {
+	func getModel(_ model: FootballPlayerDetailEntity) -> FootballPlayerContractModuleBuilder {
+		self.model = model
+		return self
+	}
 
-	func build() -> UIViewController {
-		let interactor = FootballPlayerContractInteractor()
-		let router = FootballPlayerContractRouter()
-		guard let model = model else { return UIViewController()}
+	func interactor(_ interactor: FootballPlayerContractInteractor) -> FootballPlayerContractModuleBuilder {
+		self.interactor = interactor
+		return self
+	}
+
+	func router(_ router: FootballPlayerContractRouter) -> FootballPlayerContractModuleBuilder {
+		self.router = router
+		return self
+	}
+
+	func build() throws -> UIViewController {
+		guard let interactor = self.interactor else {
+			throw ModuleBuilderError.interactorNil
+		}
+
+		guard let router = self.router else {
+			throw ModuleBuilderError.routerNil
+		}
+
+		guard let model = self.model else {
+			throw ModuleBuilderError.modelNil
+		}
+
 		let presenter = FootballPlayerContractPresenter(interactor: interactor, router: router, model: model)
 		let sheetsVC = FootballPlayerContractViewController(presenter: presenter)
+
 		if let sheet = sheetsVC.sheetPresentationController {
 			sheet.detents = [.custom(resolver: { _ in
 				return 200
 			})]
 		}
 		return sheetsVC
-	}
-}
-
-extension FootballPlayerContractModuleBuilder: IFootballPlayerContractModuleBuilder {
-	func getModel(_ model: FootballPlayerDetailEntity) {
-		self.model = model
 	}
 }

@@ -19,9 +19,20 @@ final class FootballPlayersRouter {
 extension FootballPlayersRouter: IFootballPlayersRouter
 {
 	func nextModule(vc: UIViewController, itemIndex: Int) {
-		let module = FootballPlayerDatailModuleBuilder()
-		module.getId(itemIndex)
-		let detailVC = module.build()
-		vc.navigationController?.pushViewController(detailVC, animated: true)
+		do {
+			let interactor = FootballPlayerDetailInteractor()
+			let router = FootballPlayerDetailRouter()
+			let module = try FootballPlayerDatailModuleBuilder()
+				.getId(itemIndex)
+				.interactor(interactor)
+				.router(router)
+				.build()
+
+			vc.navigationController?.pushViewController(module, animated: true)
+		} catch {
+			let alert = UIAlertController(title: "Error", message: "Something went wrong. Try again later", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+			vc.present(alert, animated: true)
+		}
 	}
 }

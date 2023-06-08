@@ -10,7 +10,9 @@ import UIKit
 protocol IImageListPresenter: AnyObject {
 	func viewDidLoad(tableView: IImagesListView, viewController: ImagesListViewController)
 	func showImage(url: String, _ image: UIImage)
+	func loadSavedImage(url: String, _ image: UIImage)
 	func showError(url: String, _ error: NetworkError)
+	func showDataError(_ error: DataError)
 	func showDownloading(url: String)
 }
 
@@ -27,6 +29,26 @@ final class ImagesListPresenter {
 }
 
 extension ImagesListPresenter: IImageListPresenter {
+	func showDataError(_ error: DataError) {
+		let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+		switch error {
+		case DataError.create:
+			alert.message = "Can't save image. Please try later."
+			self.viewController?.present(vc: alert, animated: true, completion: nil)
+		case DataError.read:
+			alert.message = "Can't load image. Please try later."
+			self.viewController?.present(vc: alert, animated: true, completion: nil)
+		case DataError.alreadySaved:
+			alert.message = "This image had already saved."
+			self.viewController?.present(vc: alert, animated: true, completion: nil)
+		}
+	}
+
+	func loadSavedImage(url: String, _ image: UIImage) {
+		self.tableView?.loadSavedImage(url: url, image: image)
+	}
+
 	func showDownloading(url: String) {
 		self.tableView?.startLoad(url: url)
 	}
@@ -72,6 +94,8 @@ extension ImagesListPresenter: IImageListPresenter {
 				self.tableView?.reload()
 			}
 		}
+		self.interactor?.savedImages()
+		self.tableView?.reload()
 
 		self.tableView?.pauseButtonTapped = { url in
 			self.pauseLoadImage(url)
@@ -79,6 +103,13 @@ extension ImagesListPresenter: IImageListPresenter {
 
 		self.tableView?.resumeButtonTapped = { url in
 			self.resumeLoadImage(url)
+		}
+
+		self.tableView?.saveButtonTapped = { url, image in
+			guard let image = image else {
+				return self.showDataError(.create)
+			}
+			self.saveImage(url, image)
 		}
 	}
 }
@@ -94,6 +125,10 @@ private extension ImagesListPresenter {
 
 	func resumeLoadImage(_ url: String) {
 		self.interactor?.resumeLoadImage(url: url)
+	}
+
+	func saveImage(_ url: String, _ image: UIImage) {
+		self.interactor?.saveImage(url: url, image: image)
 	}
 
 	func isValidURL(_ urlString: String) -> Bool {

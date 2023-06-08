@@ -13,14 +13,17 @@ protocol IImagesListView: AnyObject {
 	func startLoad(url: String)
 	func removeFailedImage(url: String)
 	func reload()
+	func loadSavedImage(url: String, image: UIImage)
 	var pauseButtonTapped: ((String) -> Void)? { get set }
 	var resumeButtonTapped: ((String) -> Void)? { get set }
+	var saveButtonTapped: ((String, UIImage?) -> Void)? { get set }
 }
 
 final class ImagesListView: UITableView {
 
 	var pauseButtonTapped: ((String) -> Void)?
 	var resumeButtonTapped: ((String) -> Void)?
+	var saveButtonTapped: ((String, UIImage?) -> Void)?
 	private var models = [ImagesListEntity]()
 	private let tableView = UITableView()
 	override init(frame: CGRect, style: UITableView.Style) {
@@ -52,6 +55,9 @@ extension ImagesListView: UITableViewDataSource {
 			return cell ?? UITableViewCell()
 		}
 		let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCellView.reuseIdentifier, for: indexPath) as! ImagesListCellView
+		if models[indexPath.item].isSaved ?? false {
+			cell.hideSaveButton()
+		}
 		guard let image = models[indexPath.item].image else {
 			return UITableViewCell()
 		}
@@ -62,6 +68,12 @@ extension ImagesListView: UITableViewDataSource {
 
 // MARK: - Delegate
 extension ImagesListView: UITableViewDelegate, IImagesListView {
+
+	func loadSavedImage(url: String, image: UIImage) {
+		self.models.append(ImagesListEntity(url: url, image: image, isSaved: true))
+	}
+
+
 	func removeFailedImage(url: String) {
 		for item in 0..<self.models.count {
 			if models[item].isPaused == nil && models[item].image == nil && models[item].isLoaded == false {
@@ -92,18 +104,25 @@ extension ImagesListView: UITableViewDelegate, IImagesListView {
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		guard let cell = tableView.cellForRow(at: indexPath) as? ImagesListLoadingCellView else { return }
-		if cell.isAnimating {
-			cell.stopAnimating()
-			let pauseUrl = models[indexPath.item].url
-			pauseButtonTapped?(pauseUrl)
-			models[indexPath.item].isPaused = true
-		} else {
-			cell.startAnimating()
-			let resumeUrl = models[indexPath.item].url
-			resumeButtonTapped?(resumeUrl)
-			models[indexPath.item].isPaused = false
+		if let cell = tableView.cellForRow(at: indexPath) as? ImagesListLoadingCellView {
+			if cell.isAnimating {
+				cell.stopAnimating()
+				let pauseUrl = models[indexPath.item].url
+				pauseButtonTapped?(pauseUrl)
+				models[indexPath.item].isPaused = true
+			} else {
+				cell.startAnimating()
+				let resumeUrl = models[indexPath.item].url
+				resumeButtonTapped?(resumeUrl)
+				models[indexPath.item].isPaused = false
+			}
+		} else if let cell = tableView.cellForRow(at: indexPath) as? ImagesListCellView {
+			let imageToSave = cell.saveImage()
+			let urlToSave = models[indexPath.item].url
+			saveButtonTapped?(urlToSave, imageToSave)
+			cell.hideSaveButton()
 		}
+
 	}
 
 	func configureTableView() {

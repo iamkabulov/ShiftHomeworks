@@ -22,4 +22,5 @@ struct ImagesListEntity {
 		}
 	}
 	var isPaused: Bool?
+	var isSaved: Bool?
 }

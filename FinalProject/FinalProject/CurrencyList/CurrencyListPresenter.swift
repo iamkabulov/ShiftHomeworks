@@ -54,9 +54,7 @@ extension CurrencyListPresenter: ICurrencyListPresenter, PresenterProtocol
 	func viewDidLoad(tableView: ICurrencyListView, viewController: CurrencyListViewController) {
 		self.tableView = tableView
 		viewController.title = "Currencies"
-//		self.viewController = viewController
-		self.viewController = viewController
-		self._interactor?.loadCurrencies()
+//		self._interactor?.loadCurrencies()
 
 		self.tableView?.currencyTappedHandler = { code in
 			guard let viewController = self._viewController else { return }

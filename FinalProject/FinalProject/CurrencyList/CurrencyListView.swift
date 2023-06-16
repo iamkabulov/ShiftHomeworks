@@ -17,7 +17,7 @@ protocol ICurrencyListView: AnyObject
 final class CurrencyListView: UITableView
 {
 	private var model = [Currency]()
-	private var isLoaded = false
+	private var isLoaded = true
 	private let tableView = UITableView()
 	var currencyTappedHandler: ((String) -> Void)?
 
@@ -26,7 +26,15 @@ final class CurrencyListView: UITableView
 		configureTableView()
 		setupTableView()
 		self.model = [Currency(code: "EUR", name: "Euro"),
-		Currency(code: "UZB", name: "So'm Lek")]
+					  Currency(code: "UZB", name: "So'm Lek"),
+					  Currency(code: "EUR", name: "Euro"),
+					  Currency(code: "UZB", name: "So'm Lek"),
+					  Currency(code: "EUR", name: "Euro"),
+					  Currency(code: "UZB", name: "So'm Lek"),
+					  Currency(code: "EUR", name: "Euro"),
+					  Currency(code: "UZB", name: "So'm Lek"),
+					  Currency(code: "EUR", name: "Euro"),
+					  Currency(code: "UZB", name: "So'm Lek"),]
 	}
 
 	required init?(coder: NSCoder) {

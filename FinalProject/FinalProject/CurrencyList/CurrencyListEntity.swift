@@ -27,7 +27,6 @@ struct CurrencyResponse: Decodable {
 		termsOfUse = try container.decode(URL.self, forKey: .termsOfUse)
 		supportedCodes = try container.decode([[String]].self, forKey: .supportedCodes)
 	}
-
 }
 
 struct Currency: Decodable {

@@ -34,7 +34,7 @@ final class CurrencyCellView: UITableViewCell
 
 	lazy private var name: UILabel = {
 		let name = UILabel()
-		name.textColor = .gray
+		name.textColor = .systemGray3
 		name.font = .preferredFont(forTextStyle: .caption1)
 		return name
 	}()

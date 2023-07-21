@@ -101,6 +101,11 @@ extension ImagesListPresenter: IImageListPresenter {
 			self.pauseLoadImage(url)
 		}
 
+		self.tableView?.btn = { _ in
+			print("PRESENTER")
+		}
+
+
 		self.tableView?.resumeButtonTapped = { url in
 			self.resumeLoadImage(url)
 		}

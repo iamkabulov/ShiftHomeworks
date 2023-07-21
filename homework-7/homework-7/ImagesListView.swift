@@ -17,6 +17,7 @@ protocol IImagesListView: AnyObject {
 	var pauseButtonTapped: ((String) -> Void)? { get set }
 	var resumeButtonTapped: ((String) -> Void)? { get set }
 	var saveButtonTapped: ((String, UIImage?) -> Void)? { get set }
+	var btn: (((() -> Void)?) -> Void)? { get set }
 }
 
 final class ImagesListView: UITableView {
@@ -24,6 +25,7 @@ final class ImagesListView: UITableView {
 	var pauseButtonTapped: ((String) -> Void)?
 	var resumeButtonTapped: ((String) -> Void)?
 	var saveButtonTapped: ((String, UIImage?) -> Void)?
+	var btn: (((() -> Void)?) -> Void)?
 	private var models = [ImagesListEntity]()
 	private let tableView = UITableView()
 	override init(frame: CGRect, style: UITableView.Style) {
@@ -49,6 +51,7 @@ extension ImagesListView: UITableViewDataSource {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListLoadingCellView.reuseIdentifier, for: indexPath) as? ImagesListLoadingCellView
 			guard models[indexPath.item].isPaused != nil else {
 				cell?.startAnimating()
+				btn?(cell?.btnPressed)
 				return cell ?? UITableViewCell()
 			}
 			cell?.stopAnimating()

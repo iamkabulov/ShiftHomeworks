@@ -8,66 +8,73 @@
 import UIKit
 import SnapKit
 
-class FootballPlayerCell: UICollectionViewCell {
+protocol IFootballPlayerCell: AnyObject
+{
+	func set(model: FootballPlayerCellModel)
+}
+
+final class FootballPlayerCell: UICollectionViewCell {
+	
+	private enum Metrics {
+		static let height: CGFloat = 140
+		static let width: CGFloat = 100
+	}
+	var cellDataLoadHandler: (() -> Void)?
 	
 	static let identifier = "collectionViewId"
-	let stackView = UIStackView()
-	let label = UILabel()
-	let imageView = UIImageView()
-
-
+	private let stackView = UIStackView()
+	private let label = LabelBuilder()
+		.font(.body)
+		.textAlignment(.center)
+		.build()
+	
+	private let imageView = UIImageView()
+	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setupViews()
 		configureStackView()
 		configureImageView()
-		configureNameLabel()
-
 	}
-
+	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+}
 
-	func configureNameLabel() {
-		label.font = UIFont.preferredFont(forTextStyle: .body)
-		label.textAlignment = .center
+extension FootballPlayerCell: IFootballPlayerCell {
+	func set(model: FootballPlayerCellModel) {
+		label.text = model.name
+		imageView.image = UIImage(named: "\(model.image)")
 	}
+}
 
+private extension FootballPlayerCell {
+	
 	func configureImageView() {
 		imageView.layer.cornerRadius = 5
 		imageView.contentMode = .scaleAspectFill
 		imageView.clipsToBounds = true
 	}
-
+	
 	func configureStackView() {
 		stackView.axis = .vertical
 		stackView.distribution = .fillProportionally
 		stackView.spacing = 4
 	}
-
-	func setData(data model: FootballPlayerCellModel) {
-		label.text = model.name
-		imageView.image = model.image
-	}
-
+	
 	func setupViews() {
 		stackView.addArrangedSubview(imageView)
 		stackView.addArrangedSubview(label)
 		contentView.addSubview(stackView)
-
+		
 		stackView.snp.makeConstraints { make in
 			make.edges.equalToSuperview()
 		}
-
+		
 		imageView.snp.makeConstraints { make in
 			make.height.equalTo(Metrics.height)
 			make.width.equalTo(Metrics.width)
 		}
 	}
-}
-
-private enum Metrics {
-	static let height: CGFloat = 140
-	static let width: CGFloat = 100
 }

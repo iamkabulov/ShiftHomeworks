@@ -7,9 +7,10 @@
 
 import UIKit
 
-struct FootballPlayerDetailViewModel {
+struct FootballPlayerDetailEntity: Decodable {
+
 	let name: String
-	let image: UIImage
+	let image: String
 	let bio: String
 	let clubTeam: String
 	let nationalTeam: String
@@ -35,8 +36,8 @@ struct FootballPlayerDetailViewModel {
 	}
 }
 
-extension FootballPlayerDetailViewModel {
-	init(with model: FootballPlayerModel) {
+extension FootballPlayerDetailEntity {
+	init(with model: FootballPlayersEntity) {
 		name = model.name
 		image = model.image
 		clubTeam = model.clubTeam

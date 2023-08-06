@@ -7,21 +7,21 @@
 
 import Foundation
 
-struct FootballPlayerContractViewModel {
+struct FootballPlayerContractEntity {
 	let cost: Int
 	let contract: Int
-
+	
 	func getCost() -> String {
 		"Market Value: \(cost) million $"
 	}
-
+	
 	func getContract() -> String {
 		"Contract: \(contract) million € per season"
 	}
 }
 
-extension FootballPlayerContractViewModel {
-	init(with model: FootballPlayerDetailViewModel) {
+extension FootballPlayerContractEntity {
+	init(with model: FootballPlayerDetailEntity) {
 		self.cost = model.cost
 		self.contract = model.contract
 	}

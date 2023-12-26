@@ -9,9 +9,12 @@ import UIKit
 
 final class ConverterViewController: UIViewController
 {
-	let ui = CurrencySelectorView()
+	let converterView = CoverterView()
+	private var _presenter: ConverterPresenter?
+	private var code: Currency?
 
-	init() {
+	init(code: Currency?) {
+		self.code = code
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -21,19 +24,30 @@ final class ConverterViewController: UIViewController
 
 	override func loadView() {
 		super.loadView()
-		self.view = self.ui
-		self.ui.delegate = self
+		self.view = self.converterView
+		self.converterView.loadCode(code)
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		self._presenter?.viewDidLoad(view: self.converterView, viewController: self)
 	}
 }
 
-extension ConverterViewController: ICurrencySelectorView
+extension ConverterViewController: ViewProtocol
 {
-	func textFieldDidReturn(_ textField: UITextField) {
-		print("CS")
+	var presenter: PresenterProtocol? {
+		get {
+			return self._presenter
+		}
+		set {
+			self._presenter = newValue as? ConverterPresenter
+		}
+	}
+
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		self.view.endEditing(true)
+		converterView.didChanged()
 	}
 }
 

@@ -1,10 +1,10 @@
-////
-////  MainViewController.swift
-////  FinalProject
-////
-////  Created by Кабулов Нурсултан Пернебаевич on 16.06.2023.
-////
 //
+//  MainViewController.swift
+//  FinalProject
+//
+//  Created by Кабулов Нурсултан Пернебаевич on 16.06.2023.
+//
+
 import UIKit
 
 class MainViewController: UITabBarController {
@@ -22,30 +22,42 @@ class MainViewController: UITabBarController {
 		let listPresenter = CurrencyListPresenter()
 		let listViewController = CurrencyListViewController()
 
-		let currencyListModuleBuilder = ModuleBuilder<CurrencyListViewController, CurrencyListInteractor, CurrencyListPresenter, CurrencyListRouter>()
+		let currencyListBuilder = ModuleBuilder<CurrencyListViewController, CurrencyListInteractor, CurrencyListPresenter, CurrencyListRouter>()
 
-		let currencyListModule = currencyListModuleBuilder.setView(listViewController)
+		let currencyListModule = currencyListBuilder.setView(listViewController)
 								 .setInteractor(listInteractor)
 								 .setPresenter(listPresenter)
 								 .setRouter(listRouter)
 								 .buildModule()
 
-		let moneyVC = ConverterViewController()
+		let converterBuilder = ModuleBuilder<ConverterViewController, ConverterInteractor, ConverterPresenter, ConverterRouter>()
+
+		let converterInteractor = ConverterInteractor()
+		let converterRouter = ConverterRouter()
+		let converterPresenter = ConverterPresenter()
+		let converterViewController = ConverterViewController(code: nil)
+
+		let moneyVC = converterBuilder.setView(converterViewController)
+			.setInteractor(converterInteractor)
+			.setPresenter(converterPresenter)
+			.setRouter(converterRouter)
+			.buildModule()
+
 		let moreVC = UIViewController()
 
 		listViewController.setTabBarImage(imageName: "list.dash")
-		moneyVC.setTabBarImage(imageName: "arrow.left.arrow.right")
+		converterViewController.setTabBarImage(imageName: "arrow.left.arrow.right")
 		moreVC.setTabBarImage(imageName: "ellipsis.circle")
 
 		guard let currencyListModule = currencyListModule else { return }
 		let currencyList = UINavigationController(rootViewController: currencyListModule as? UIViewController ?? UIViewController())
-		let moneyNC = UINavigationController(rootViewController: moneyVC)
+		let moneyNC = UINavigationController(rootViewController: moneyVC as? UIViewController ?? UIViewController())
 		let moreNC = UINavigationController(rootViewController: moreVC)
 
 		currencyList.navigationBar.barTintColor = .red
 		hideNavigationBarLine(currencyList.navigationBar)
 
-		let tabList = [currencyList, moneyNC, moreNC]
+		let tabList = [moneyNC, currencyList, moreNC]
 		view.backgroundColor = .systemBackground
 		viewControllers = tabList
 	}

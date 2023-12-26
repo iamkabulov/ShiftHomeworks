@@ -7,33 +7,40 @@
 
 import UIKit
 
-protocol ICurrencySelectorCellView: AnyObject
+protocol ICurrencySelectorCellViewDelegate: AnyObject
 {
-
+	func didTappedHandler(code: String, name: String)
+	func getCurrency() -> String
 }
 
-final class CurrencySelectorCellView: UITableViewCell
+final class CurrencySelectorCellView: UIButton
 {
-	static let reuseId = "currencyCellId"
-
 	lazy private var currencyLabel: UILabel = {
 		let currencyLabel = UILabel()
-		currencyLabel.text = "USD"
 		return currencyLabel
 	}()
 
 	lazy private var flagImage: UIImageView = {
 		let flagImage = UIImageView()
 		flagImage.contentMode = .scaleToFill
-		flagImage.image = UIImage(named: "ea")
 		return flagImage
 	}()
 
-	let tableView = CurrencySelectorListView()
+	lazy private var showMenuButton: UIButton = {
+		let button = UIButton(type: .custom)
+		let image = UIImage(systemName: "chevron.down")?.withRenderingMode(.alwaysTemplate)
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.setImage(image, for: .normal)
+		button.tintColor = .black
+		return button
+	}()
 
-	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		self.setupView()
+	weak var buttonTappedHandler: ICurrencySelectorCellViewDelegate?
+
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		setupView()
+		buttonTappedHandler = self
 	}
 
 	required init?(coder: NSCoder) {
@@ -41,30 +48,41 @@ final class CurrencySelectorCellView: UITableViewCell
 	}
 }
 
-extension CurrencySelectorCellView: ICurrencySelectorCellView
+extension CurrencySelectorCellView: ICurrencySelectorCellViewDelegate
 {
-	@objc func btnTapped() {
-		tableView.translatesAutoresizingMaskIntoConstraints = false
-		addSubview(tableView)
-		NSLayoutConstraint.activate([
-			tableView.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 20),
-			tableView.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 30),
-			tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-			tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -90)
-		])
+	func setCurrency(_ currency: Currency?) {
+		guard let currency = currency else { return }
+		currencyLabel.text = currency.code
+		flagImage.image = UIImage(named: currency.findFlagImage(currency.code))
 	}
+
+	func getCurrency() -> String {
+		guard let name = currencyLabel.text else { return "" }
+		return name
+	}
+
+	func didTappedHandler(code: String, name: String) {
+		flagImage.image = UIImage(named: code)
+		currencyLabel.text = name
+	}
+
 	func setupView() {
 		currencyLabel.translatesAutoresizingMaskIntoConstraints = false
 		flagImage.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(currencyLabel)
 		addSubview(flagImage)
+		addSubview(showMenuButton)
 		NSLayoutConstraint.activate([
 			flagImage.topAnchor.constraint(equalTo: topAnchor),
-			flagImage.leadingAnchor.constraint(equalTo: leadingAnchor),
 			flagImage.heightAnchor.constraint(equalToConstant: 18),
 			flagImage.widthAnchor.constraint(equalToConstant: 28),
 			currencyLabel.topAnchor.constraint(equalTo: topAnchor),
-			currencyLabel.leadingAnchor.constraint(equalTo: flagImage.trailingAnchor, constant: 2)
+			currencyLabel.leadingAnchor.constraint(equalTo: flagImage.trailingAnchor, constant: 2),
+			currencyLabel.bottomAnchor.constraint(equalTo: flagImage.bottomAnchor),
+			showMenuButton.topAnchor.constraint(equalTo: flagImage.topAnchor),
+			showMenuButton.leadingAnchor.constraint(equalTo: currencyLabel.trailingAnchor, constant: 2),
+			showMenuButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+			showMenuButton.bottomAnchor.constraint(equalTo: flagImage.bottomAnchor)
 		])
 	}
 }

@@ -37,6 +37,4 @@ extension CurrencyListViewController: ViewProtocol
 			self._presenter = newValue as? CurrencyListPresenter
 		}
 	}
-
-
 }

@@ -33,3 +33,13 @@ struct Currency: Decodable {
 	let code: String
 	let name: String
 }
+
+extension Currency {
+	func findFlagImage(_ currencyCode: String) -> String {
+		let locale = Locale.availableIdentifiers
+				.compactMap { Locale(identifier: $0) }
+				.first { $0.currency?.identifier == currencyCode }
+		let countryCode = locale?.language.region?.identifier.lowercased()
+		return countryCode ?? "xx"
+	}
+}

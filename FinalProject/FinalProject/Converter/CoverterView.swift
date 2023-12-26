@@ -9,7 +9,8 @@ import UIKit
 
 protocol ICoverterView: AnyObject
 {
-	
+	var twoCurrencies: ((String, String, Double) -> Void)? { get set }
+	func showRate(_ result: PairExchangeRateWithAmount)
 }
 
 final class CoverterView: UIView
@@ -19,9 +20,29 @@ final class CoverterView: UIView
 		return ui
 	}()
 
-	init() {
-		super.init(frame: .zero)
+	lazy private var to: CurrencySelectorView = {
+		let ui = CurrencySelectorView()
+		return ui
+	}()
+
+	weak var selectorViewDelegate: ICurrencySelectorViewDelegate?
+	weak var delegate: ICoverterView?
+	var amountReturnHandler: ((Double) -> Void)?
+	var currencyReturnHandler: ((String) -> Void)?
+	var twoCurrencies: ((String, String, Double) -> Void)?
+	
+	lazy private var stack: UIStackView = {
+		let stack = UIStackView()
+		stack.distribution = .fillProportionally
+		stack.alignment = .center
+		stack.axis = .horizontal
+		return stack
+	}()
+
+	override init(frame: CGRect) {
+		super.init(frame: frame)
 		setupView()
+		configure()
 	}
 
 	required init?(coder: NSCoder) {
@@ -29,15 +50,44 @@ final class CoverterView: UIView
 	}
 }
 
-extension CoverterView: ICoverterView
+extension CoverterView: ICoverterView, ICurrencySelectorViewDelegate
 {
+	func showRate(_ result: PairExchangeRateWithAmount) {
+		to.setRate(result)
+	}
 
-	func setupView() {
+	func loadCode(_ code: Currency?) {
+		print("\(code) Converter VIEW ______")
+		to.setCurrency(code)
+		from.setCurrency(Currency(code: "KZT", name: "Kazakhstani tenge"))
+	}
+	
+	func didChanged() {
+		let fromCurrency = from.getCurrency()
+		let toCurrency = to.getCurrency()
+		let amount = from.getText()
+		twoCurrencies?(fromCurrency, toCurrency, amount)
+	}
+
+	func configure() {
+		stack.translatesAutoresizingMaskIntoConstraints = false
 		from.translatesAutoresizingMaskIntoConstraints = false
-		addSubview(from)
+		to.translatesAutoresizingMaskIntoConstraints = false
+		from.delegate = self
+		to.delegate = self
+
+	}
+	func setupView() {
+		stack.addArrangedSubview(from)
+		stack.addArrangedSubview(to)
+		addSubview(stack)
 		NSLayoutConstraint.activate([
-			from.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-			from.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
+			stack.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+			stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+			stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+			stack.heightAnchor.constraint(equalToConstant: 200),
 		])
 	}
+
+	
 }

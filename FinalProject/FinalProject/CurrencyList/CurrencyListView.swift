@@ -11,7 +11,7 @@ protocol ICurrencyListView: AnyObject
 {
 	func showCurrencies(_ model: [Currency])
 	func reload()
-	var currencyTappedHandler: ((String) -> Void)? { get set }
+	var currencyTappedHandler: ((Currency) -> Void)? { get set }
 }
 
 final class CurrencyListView: UITableView
@@ -19,22 +19,22 @@ final class CurrencyListView: UITableView
 	private var model = [Currency]()
 	private var isLoaded = true
 	private let tableView = UITableView()
-	var currencyTappedHandler: ((String) -> Void)?
+	var currencyTappedHandler: ((Currency) -> Void)?
 
 	override init(frame: CGRect, style: UITableView.Style) {
 		super.init(frame: frame, style: style)
 		configureTableView()
 		setupTableView()
 		self.model = [Currency(code: "EUR", name: "Euro"),
-					  Currency(code: "UZB", name: "So'm Lek"),
+					  Currency(code: "USD", name: "US Dollar"),
 					  Currency(code: "EUR", name: "Euro"),
-					  Currency(code: "UZB", name: "So'm Lek"),
+					  Currency(code: "USD", name: "US Dollar"),
 					  Currency(code: "EUR", name: "Euro"),
-					  Currency(code: "UZB", name: "So'm Lek"),
+					  Currency(code: "USD", name: "US Dollar"),
 					  Currency(code: "EUR", name: "Euro"),
-					  Currency(code: "UZB", name: "So'm Lek"),
+					  Currency(code: "USD", name: "US Dollar"),
 					  Currency(code: "EUR", name: "Euro"),
-					  Currency(code: "UZB", name: "So'm Lek"),]
+					  Currency(code: "USD", name: "US Dollar"),]
 	}
 
 	required init?(coder: NSCoder) {
@@ -88,8 +88,11 @@ extension CurrencyListView: UITableViewDataSource
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		
 		let loadingCell = tableView.dequeueReusableCell(withIdentifier: CurrencyLoadingCellView.reuseId, for: indexPath) as? CurrencyLoadingCellView
+
 		guard let loadingCell = loadingCell else { return UITableViewCell() }
+
 
 		if isLoaded {
 			let cell = tableView.dequeueReusableCell(withIdentifier: CurrencyCellView.reuseId, for: indexPath) as? CurrencyCellView
@@ -99,10 +102,9 @@ extension CurrencyListView: UITableViewDataSource
 			cell.setCurrency(code: code, name: name)
 			return cell
 		}
-		
+
 		return loadingCell
 	}
-
 }
 
 //MARK: - UITableViewDelegate
@@ -110,8 +112,8 @@ extension CurrencyListView: UITableViewDelegate
 {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-//		guard let cell = tableView.cellForRow(at: indexPath) as? CurrencyCellView else { return }
-		let code = model[indexPath.item].code
+		guard tableView.cellForRow(at: indexPath) is CurrencyCellView else { return }
+		let code = model[indexPath.item]
 		currencyTappedHandler?(code)
 	}
 }

@@ -50,8 +50,7 @@ final class CurrencySelectorCellView: UIButton
 
 extension CurrencySelectorCellView: ICurrencySelectorCellViewDelegate
 {
-	func setCurrency(_ currency: Currency?) {
-		guard let currency = currency else { return }
+	func setCurrency(_ currency: Currency) {
 		currencyLabel.text = currency.code
 		flagImage.image = UIImage(named: currency.findFlagImage(currency.code))
 	}

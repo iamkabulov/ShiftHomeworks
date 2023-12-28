@@ -12,6 +12,7 @@ protocol ICurrencyListView: AnyObject
 	func showCurrencies(_ model: [Currency])
 	func reload()
 	var currencyTappedHandler: ((Currency) -> Void)? { get set }
+	var toggleTappedHandler: (((() -> Void)?) -> Void)? { get set }
 }
 
 final class CurrencyListView: UITableView
@@ -20,6 +21,7 @@ final class CurrencyListView: UITableView
 	private var isLoaded = true
 	private let tableView = UITableView()
 	var currencyTappedHandler: ((Currency) -> Void)?
+	var toggleTappedHandler: (((() -> Void)?) -> Void)?
 
 	override init(frame: CGRect, style: UITableView.Style) {
 		super.init(frame: frame, style: style)
@@ -113,8 +115,10 @@ extension CurrencyListView: UITableViewDelegate
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 		guard tableView.cellForRow(at: indexPath) is CurrencyCellView else { return }
+		guard let cell = tableView.cellForRow(at: indexPath) as? CurrencyCellView else { return }
 		let code = model[indexPath.item]
 		currencyTappedHandler?(code)
+		toggleTappedHandler?(cell.togglePressed)
 	}
 }
 

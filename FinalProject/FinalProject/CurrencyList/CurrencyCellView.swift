@@ -10,6 +10,7 @@ import UIKit
 protocol ICurrencyCellView: AnyObject
 {
 	func setCurrency(code: String, name: String)
+	var togglePressed: (() -> Void)? { get set }
 }
 
 final class CurrencyCellView: UITableViewCell
@@ -34,7 +35,7 @@ final class CurrencyCellView: UITableViewCell
 
 	lazy private var name: UILabel = {
 		let name = UILabel()
-		name.textColor = .systemGray3
+		name.textColor = .systemGray2
 		name.font = .preferredFont(forTextStyle: .caption1)
 		return name
 	}()
@@ -44,6 +45,14 @@ final class CurrencyCellView: UITableViewCell
 		flagImage.contentMode = .scaleToFill
 		return flagImage
 	}()
+
+	lazy private var toggle: UISwitch = {
+		let toggle = UISwitch()
+		toggle.addTarget(self, action: #selector(switchValueDidChange(_:)), for: .valueChanged)
+		return toggle
+	}()
+
+	var togglePressed: (() -> Void)?
 
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -77,14 +86,25 @@ extension CurrencyCellView: ICurrencyCellView
 		return countryCode
 	}
 
+	@objc func switchValueDidChange(_ sender: UISwitch!) {
+		if (sender.isOn){
+			print("on")
+		}
+		else{
+			print("off")
+		}
+	}
+
 	func setupCell() {
 		code.translatesAutoresizingMaskIntoConstraints = false
 		name.translatesAutoresizingMaskIntoConstraints = false
 		flagImage.translatesAutoresizingMaskIntoConstraints = false
+		toggle.translatesAutoresizingMaskIntoConstraints = false
 
 		addSubview(flagImage)
 		addSubview(code)
 		addSubview(name)
+		addSubview(toggle)
 		NSLayoutConstraint.activate([
 			flagImage.centerYAnchor.constraint(equalTo: centerYAnchor),
 			flagImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metrics.Spacing.medium),
@@ -93,7 +113,9 @@ extension CurrencyCellView: ICurrencyCellView
 			code.topAnchor.constraint(equalTo: flagImage.topAnchor),
 			code.leadingAnchor.constraint(equalTo: flagImage.trailingAnchor, constant: Metrics.Spacing.medium),
 			name.bottomAnchor.constraint(equalTo: flagImage.bottomAnchor),
-			name.leadingAnchor.constraint(equalTo: code.leadingAnchor)
+			name.leadingAnchor.constraint(equalTo: code.leadingAnchor),
+			toggle.centerYAnchor.constraint(equalTo: centerYAnchor),
+			toggle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metrics.Spacing.medium)
 		])
 	}
 }

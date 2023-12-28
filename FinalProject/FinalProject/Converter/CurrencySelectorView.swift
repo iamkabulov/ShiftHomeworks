@@ -25,7 +25,7 @@ final class CurrencySelectorView: UIView
 	private var isLoadedRateResult: Bool = true
 
 	lazy private var menuItems: [UIAction] = {
-		return [
+		[
 			UIAction(title: "USD", image: UIImage(named: "us"), handler: { (_) in
 				if self.currencySelectorButton.getCurrency() != "USD" {
 					self.currencySelectorButton.didTappedHandler(code:"us", name: "USD")
@@ -105,7 +105,10 @@ extension CurrencySelectorView: IInputViewDelegate
 	}
 
 	func setCurrency(_ currency: Currency?) {
+		guard let currency = currency else { return }
 		currencySelectorButton.setCurrency(currency)
+//		menuItems.append(makeCurrencies(name: currency.code, code: currency.findFlagImage(currency.code)))
+//		currencySelectorButton.menu = UIMenu(title: "", image: nil, identifier: nil, options: [], children: menuItems)
 	}
 
 	func getCurrency() -> String {

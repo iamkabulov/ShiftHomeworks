@@ -58,8 +58,8 @@ extension CoverterView: ICoverterView, ICurrencySelectorViewDelegate
 
 	func loadCode(_ code: Currency?) {
 		print("\(code) Converter VIEW ______")
-		to.setCurrency(code)
-		from.setCurrency(Currency(code: "KZT", name: "Kazakhstani tenge"))
+		to.setCurrency(Currency(code: "KZT", name: "Kazakhstani tenge"))
+		from.setCurrency(Currency(code: "USD", name: "US Dollars"))
 	}
 	
 	func didChanged() {

@@ -11,6 +11,7 @@ protocol ICurrencyListPresenter: AnyObject
 {
 	func viewDidLoad(tableView: ICurrencyListView, viewController: CurrencyListViewController)
 	func showCurrencies(currencies: [Currency])
+	func getCurrencies(currencies: [Currency])
 }
 
 final class CurrencyListPresenter
@@ -24,6 +25,12 @@ final class CurrencyListPresenter
 
 extension CurrencyListPresenter: ICurrencyListPresenter, PresenterProtocol
 {
+	func getCurrencies(currencies: [Currency]) {
+		print(currencies)
+		self.tableView?.turnOnCurries(currencies)
+		self.tableView?.reload()
+	}
+
 	var router: RouterProtocol? {
 		get {
 			return self._router
@@ -54,16 +61,24 @@ extension CurrencyListPresenter: ICurrencyListPresenter, PresenterProtocol
 	func viewDidLoad(tableView: ICurrencyListView, viewController: CurrencyListViewController) {
 		self.tableView = tableView
 		viewController.title = "Currencies"
-//		self._interactor?.loadCurrencies()
-
+		self._interactor?.loadCurrencies()
+		self._interactor?.getCurrencies()
 		self.tableView?.currencyTappedHandler = { code in
 			print(code)
 			guard let viewController = self._viewController else { return }
 			self._router?.currencyConverter(viewController: viewController, code)
 		}
 
-		self.tableView?.toggleTappedHandler = { _ in
-			print("PRESENTER")
+		//TODO: - coredata
+		self.tableView?.addCurrencyHandler = { code, name in
+			print("\(code) PRESENTER ADD")
+			self._interactor?.saveCurrency(code: code, name: name)
+		}
+
+		//TODO: - coredata
+		self.tableView?.removeCurrencyHandler = { code, name in
+			print("\(code) PRESENTER REMOVE")
+			self._interactor?.deleteCurrency(code: code, name: name)
 		}
 	}
 

@@ -10,33 +10,37 @@ import UIKit
 protocol ICurrencyListView: AnyObject
 {
 	func showCurrencies(_ model: [Currency])
+	func turnOnCurries(_ model: [Currency])
 	func reload()
 	var currencyTappedHandler: ((Currency) -> Void)? { get set }
-	var toggleTappedHandler: (((() -> Void)?) -> Void)? { get set }
+	var addCurrencyHandler: ((String, String) -> Void)? { get set }
+	var removeCurrencyHandler: ((String, String) -> Void)? { get set }
 }
 
 final class CurrencyListView: UITableView
 {
 	private var model = [Currency]()
-	private var isLoaded = true
+	private var toggleOnCurries: [Currency]?
+	private var isLoaded = false
 	private let tableView = UITableView()
 	var currencyTappedHandler: ((Currency) -> Void)?
-	var toggleTappedHandler: (((() -> Void)?) -> Void)?
+	var addCurrencyHandler: ((String, String) -> Void)?
+	var removeCurrencyHandler: ((String, String) -> Void)?
 
 	override init(frame: CGRect, style: UITableView.Style) {
 		super.init(frame: frame, style: style)
 		configureTableView()
 		setupTableView()
-		self.model = [Currency(code: "EUR", name: "Euro"),
-					  Currency(code: "USD", name: "US Dollar"),
-					  Currency(code: "EUR", name: "Euro"),
-					  Currency(code: "USD", name: "US Dollar"),
-					  Currency(code: "EUR", name: "Euro"),
-					  Currency(code: "USD", name: "US Dollar"),
-					  Currency(code: "EUR", name: "Euro"),
-					  Currency(code: "USD", name: "US Dollar"),
-					  Currency(code: "EUR", name: "Euro"),
-					  Currency(code: "USD", name: "US Dollar"),]
+//		self.model = [Currency(code: "EUR", name: "Euro"),
+//					  Currency(code: "USD", name: "US Dollar"),
+//					  Currency(code: "EUR", name: "Euro"),
+//					  Currency(code: "USD", name: "US Dollar"),
+//					  Currency(code: "EUR", name: "Euro"),
+//					  Currency(code: "USD", name: "US Dollar"),
+//					  Currency(code: "EUR", name: "Euro"),
+//					  Currency(code: "USD", name: "US Dollar"),
+//					  Currency(code: "EUR", name: "Euro"),
+//					  Currency(code: "USD", name: "US Dollar"),]
 	}
 
 	required init?(coder: NSCoder) {
@@ -47,6 +51,10 @@ final class CurrencyListView: UITableView
 //MARK: - ICurrencyListView
 extension CurrencyListView: ICurrencyListView
 {
+	func turnOnCurries(_ model: [Currency]) {
+		self.toggleOnCurries = model
+	}
+
 	func reload() {
 		self.tableView.reloadData()
 	}
@@ -102,9 +110,26 @@ extension CurrencyListView: UITableViewDataSource
 			let code = model[indexPath.item].code
 			let name = model[indexPath.item].name
 			cell.setCurrency(code: code, name: name)
+
+			//TODO: - Кажется тут есть баг что при скроле он включает тоггл
+			if let turnOn = toggleOnCurries {
+				turnOn.contains { currency in
+					if currency.code == code && currency.name == name {
+						cell.setToggleOn()
+						return true
+					}
+					return false
+				}
+			}
+
+			cell.addCurrency = { code, name in
+				self.addCurrencyHandler?(code, name)
+			}
+			cell.removeCurrency = { code, name in
+				self.removeCurrencyHandler?(code, name)
+			}
 			return cell
 		}
-
 		return loadingCell
 	}
 }
@@ -118,7 +143,6 @@ extension CurrencyListView: UITableViewDelegate
 		guard let cell = tableView.cellForRow(at: indexPath) as? CurrencyCellView else { return }
 		let code = model[indexPath.item]
 		currencyTappedHandler?(code)
-		toggleTappedHandler?(cell.togglePressed)
 	}
 }
 

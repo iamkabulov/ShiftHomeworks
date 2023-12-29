@@ -77,9 +77,11 @@ extension CoverterView: ICoverterView, ICurrencySelectorViewDelegate
 		to.delegate = self
 
 	}
+
 	func setupView() {
 		stack.addArrangedSubview(from)
 		stack.addArrangedSubview(to)
+//		stack.addArrangedSubview()
 		addSubview(stack)
 		NSLayoutConstraint.activate([
 			stack.topAnchor.constraint(equalTo: topAnchor, constant: 20),

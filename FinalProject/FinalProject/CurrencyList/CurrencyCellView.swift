@@ -9,9 +9,11 @@ import UIKit
 
 protocol ICurrencyCellView: AnyObject
 {
+	var removeCurrency: ((_ code: String, _ name: String) -> Void)? { get set }
+	var addCurrency: ((_ code: String, _ name: String) -> Void)? { get set }
 	func setCurrency(code: String, name: String)
-	var togglePressed: (() -> Void)? { get set }
 }
+
 
 final class CurrencyCellView: UITableViewCell
 {
@@ -52,7 +54,8 @@ final class CurrencyCellView: UITableViewCell
 		return toggle
 	}()
 
-	var togglePressed: (() -> Void)?
+	var addCurrency: ((_ code: String, _ name: String) -> Void)?
+	var removeCurrency: ((_ code: String, _ name: String) -> Void)?
 
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -78,6 +81,10 @@ extension CurrencyCellView: ICurrencyCellView
 		
 	}
 
+	func setToggleOn() {
+		toggle.isOn = true
+	}
+
 	func findFlagImage(_ currencyCode: String) -> String? {
 		let locale = Locale.availableIdentifiers
 				.compactMap { Locale(identifier: $0) }
@@ -87,11 +94,14 @@ extension CurrencyCellView: ICurrencyCellView
 	}
 
 	@objc func switchValueDidChange(_ sender: UISwitch!) {
-		if (sender.isOn){
-			print("on")
+		guard let code = self.code.text, let name = self.name.text else { return }
+		if (sender.isOn) {
+			addCurrency?(code, name)
+			print(code + " SWITCH ON")
 		}
-		else{
-			print("off")
+		else {
+			removeCurrency?(code, name)
+			print(code + " SWITCH OFF")
 		}
 	}
 
@@ -101,10 +111,10 @@ extension CurrencyCellView: ICurrencyCellView
 		flagImage.translatesAutoresizingMaskIntoConstraints = false
 		toggle.translatesAutoresizingMaskIntoConstraints = false
 
-		addSubview(flagImage)
-		addSubview(code)
-		addSubview(name)
-		addSubview(toggle)
+		contentView.addSubview(flagImage)
+		contentView.addSubview(code)
+		contentView.addSubview(name)
+		contentView.addSubview(toggle)
 		NSLayoutConstraint.activate([
 			flagImage.centerYAnchor.constraint(equalTo: centerYAnchor),
 			flagImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metrics.Spacing.medium),

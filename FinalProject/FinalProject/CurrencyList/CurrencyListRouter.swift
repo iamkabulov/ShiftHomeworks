@@ -34,6 +34,6 @@ extension CurrencyListRouter: ICurrencyListRouter, RouterProtocol
 			.setRouter(converterRouter)
 			.buildModule()
 
-//		viewController.navigationController?.pushViewController(converterViewController, animated: true)
+		viewController.navigationController?.pushViewController(converterViewController, animated: true)
 	}
 }

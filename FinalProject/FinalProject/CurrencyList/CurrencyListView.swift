@@ -20,7 +20,7 @@ protocol ICurrencyListView: AnyObject
 final class CurrencyListView: UITableView
 {
 	private var model = [Currency]()
-	private var toggleOnCurries: [Currency]?
+	private var toggleOnCurries = [Currency]()
 	private var isLoaded = false
 	private let tableView = UITableView()
 	var currencyTappedHandler: ((Currency) -> Void)?
@@ -109,17 +109,16 @@ extension CurrencyListView: UITableViewDataSource
 			guard let cell = cell else { return loadingCell }
 			let code = model[indexPath.item].code
 			let name = model[indexPath.item].name
-			cell.setCurrency(code: code, name: name)
 
+			// Наверное нужно смаппить и сделать новый лист тогда будет проще
 			//TODO: - Кажется тут есть баг что при скроле он включает тоггл
-			if let turnOn = toggleOnCurries {
-				turnOn.contains { currency in
-					if currency.code == code && currency.name == name {
-						cell.setToggleOn()
-						return true
-					}
-					return false
+			toggleOnCurries.contains { currency in
+				if currency.code == code && currency.name == name {
+					cell.setCurrency(code: code, name: name, isOn: true)
+					return true
 				}
+				cell.setCurrency(code: code, name: name, isOn: false)
+				return false
 			}
 
 			cell.addCurrency = { code, name in
@@ -127,6 +126,10 @@ extension CurrencyListView: UITableViewDataSource
 			}
 			cell.removeCurrency = { code, name in
 				self.removeCurrencyHandler?(code, name)
+			}
+			guard !toggleOnCurries.isEmpty else {
+				cell.setCurrency(code: code, name: name, isOn: false)
+				return cell
 			}
 			return cell
 		}

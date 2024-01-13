@@ -57,7 +57,7 @@ class MainViewController: UITabBarController {
 		currencyList.navigationBar.barTintColor = .red
 		hideNavigationBarLine(currencyList.navigationBar)
 
-		let tabList = [moneyNC, currencyList, moreNC]
+		let tabList = [currencyList, moneyNC, moreNC]
 		view.backgroundColor = .systemBackground
 		viewControllers = tabList
 	}

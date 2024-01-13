@@ -11,7 +11,7 @@ protocol ICurrencyCellView: AnyObject
 {
 	var removeCurrency: ((_ code: String, _ name: String) -> Void)? { get set }
 	var addCurrency: ((_ code: String, _ name: String) -> Void)? { get set }
-	func setCurrency(code: String, name: String)
+	func setCurrency(code: String, name: String, isOn: Bool)
 }
 
 
@@ -67,22 +67,26 @@ final class CurrencyCellView: UITableViewCell
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+
+	override func prepareForReuse() {
+		self.toggle.isOn = false
+	}
 }
 
 //MARK: - ICurrencyCellView
 extension CurrencyCellView: ICurrencyCellView
 {
-	func setCurrency(code: String, name: String) {
+	func setCurrency(code: String, name: String, isOn: Bool) {
 		self.code.text = code
 		self.name.text = name
 		let countryCode = findFlagImage(code)
 		guard let countryCode = countryCode else { return self.flagImage.image = UIImage(named: "xx") }
 		self.flagImage.image = UIImage(named: countryCode)
-		
+		self.toggle.isOn = isOn
 	}
 
 	func setToggleOn() {
-		toggle.isOn = true
+
 	}
 
 	func findFlagImage(_ currencyCode: String) -> String? {

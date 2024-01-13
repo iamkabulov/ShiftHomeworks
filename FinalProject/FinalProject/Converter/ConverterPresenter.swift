@@ -11,6 +11,7 @@ protocol IConverterPresenter: AnyObject
 {
 	func viewDidLoad(view: ICoverterView, viewController: ConverterViewController)
 	func showExchangeRate(result: PairExchangeRateWithAmount)
+	func getCurrencies(currencies: [Currency])
 }
 
 final class ConverterPresenter {
@@ -49,13 +50,21 @@ extension ConverterPresenter: IConverterPresenter, PresenterProtocol
 		}
 	}
 
+	func getCurrencies(currencies: [Currency]) {
+		self._converterView?.setCurrenciesToAction(currencies)	}
+
 	func showExchangeRate(result: PairExchangeRateWithAmount) {
 		self._converterView?.showRate(result)
+	}
+
+	func getSavedCurrencies() {
+		self._interactor?.getSavedCurrencies()
 	}
 
 	func viewDidLoad(view: ICoverterView, viewController: ConverterViewController) {
 		self._converterView = view
 
+		self._interactor?.getSavedCurrencies()
 //		self._converterView?.amountReturnHandler = { amount in
 //			print("\(amount) Presenter")
 //		}

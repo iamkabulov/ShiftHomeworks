@@ -9,6 +9,7 @@ import UIKit
 protocol ICurrencySelectorViewDelegate: AnyObject
 {
 	func didChanged()
+	func didBeginEditing(_ view: CurrencySelectorView)
 }
 
 final class CurrencySelectorView: UIView
@@ -21,39 +22,13 @@ final class CurrencySelectorView: UIView
 			static let medium: CGFloat = 8
 		}
 	}
+	private var isLoading = false
+	private var currencyForActions = [Currency]()
 
 	private var isLoadedRateResult: Bool = true
 
-	lazy private var menuItems: [UIAction] = {
-		[
-			UIAction(title: "USD", image: UIImage(named: "us"), handler: { (_) in
-				if self.currencySelectorButton.getCurrency() != "USD" {
-					self.currencySelectorButton.didTappedHandler(code:"us", name: "USD")
-					self.amount.getAmount()
-				}
-			}),
-			UIAction(title: "EUR", image: UIImage(named: "ea"), handler: { (_) in
-				if self.currencySelectorButton.getCurrency() != "EUR" {
-					self.currencySelectorButton.didTappedHandler(code:"ea", name: "EUR")
-					self.amount.getAmount()
-				}
-			}),
-			UIAction(title: "KZT", image: UIImage(named: "kz"), handler: { (_) in
-				if self.currencySelectorButton.getCurrency() != "KZT" {
-					self.currencySelectorButton.didTappedHandler(code:"kz", name: "KZT")
-					self.amount.getAmount()
-				}
-			})
-		]
-	}()
-
-	lazy private var demoMenu: UIMenu = {
-	  return UIMenu(title: "", image: nil, identifier: nil, options: [], children: menuItems)
-	}()
-
 	lazy private var currencySelectorButton: CurrencySelectorCellView = {
 		let ui = CurrencySelectorCellView()
-		ui.menu = demoMenu
 		ui.showsMenuAsPrimaryAction = true
 		return ui
 	}()
@@ -90,14 +65,22 @@ extension CurrencySelectorView: IInputViewDelegate
 //			setupView(loadingAmount)
 //		}
 //	}
+	func resetInput() {
+		amount.reset()
+	}
 
-	func makeCurrencies(name: String, code: String) -> UIAction {
-		return UIAction(title: name, image: UIImage(named: code), handler: { (_) in
-			if self.currencySelectorButton.getCurrency() != name {
-				self.currencySelectorButton.didTappedHandler(code: code, name: name)
-				self.amount.getAmount()
-			}
-		})
+	func makeActions(currencies: [Currency]) {
+		let actions = currencies.map { currency in
+			let code = currency.code
+			let imageName = currency.findFlagImage(code)
+			return UIAction(title: code, image: UIImage(named: imageName), handler: { (_) in
+				if self.currencySelectorButton.getCurrency() != code {
+					self.currencySelectorButton.didTappedHandler(code: imageName, name: code)
+					self.amount.getAmount()
+				}
+			})
+		}
+		self.currencySelectorButton.menu = UIMenu(title: "", image: nil, identifier: nil, options: [], children: actions)
 	}
 
 	func setRate(_ result: PairExchangeRateWithAmount) {
@@ -126,10 +109,29 @@ extension CurrencySelectorView: IInputViewDelegate
 		print("______selector")
 	}
 
+	func textFieldDidBeginEditing(_ textField: UITextField) {
+		delegate?.didBeginEditing(self)
+	}
+
 	func textFieldDidReturn(_ textField: UITextField) {
 		print("______selector")
 		delegate?.didChanged()
 		print("______selector")
+	}
+
+	func loading(_ result: Bool) {
+		isLoading = result
+		resetView()
+	}
+
+	func resetView() {
+		if isLoading {
+			removeView(amount)
+			setupView(loadingAmount)
+		} else {
+			removeView(loadingAmount)
+			setupView(amount)
+		}
 	}
 
 	func setupView(_ view: UIView) {
@@ -140,6 +142,18 @@ extension CurrencySelectorView: IInputViewDelegate
 		addSubview(view)
 		addSubview(currencySelectorButton)
 		NSLayoutConstraint.activate([
+			view.topAnchor.constraint(equalTo: topAnchor),
+			view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metrics.Spacing.medium),
+			view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metrics.Spacing.medium),
+			currencySelectorButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: Metrics.Spacing.medium),
+			currencySelectorButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			currencySelectorButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			currencySelectorButton.bottomAnchor.constraint(equalTo: bottomAnchor)
+		])
+	}
+
+	func removeView(_ view: UIView) {
+		NSLayoutConstraint.deactivate([
 			view.topAnchor.constraint(equalTo: topAnchor),
 			view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Metrics.Spacing.medium),
 			view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Metrics.Spacing.medium),

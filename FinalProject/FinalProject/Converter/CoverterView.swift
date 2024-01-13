@@ -11,6 +11,7 @@ protocol ICoverterView: AnyObject
 {
 	var twoCurrencies: ((String, String, Double) -> Void)? { get set }
 	func showRate(_ result: PairExchangeRateWithAmount)
+	func setCurrenciesToAction(_ currencies: [Currency])
 }
 
 final class CoverterView: UIView
@@ -53,20 +54,51 @@ final class CoverterView: UIView
 extension CoverterView: ICoverterView, ICurrencySelectorViewDelegate
 {
 	func showRate(_ result: PairExchangeRateWithAmount) {
-		to.setRate(result)
+		if result.baseCode == to.getCurrency() {
+			sleep(2)
+			from.loading(false)
+			from.setRate(result)
+		} else if result.baseCode == from.getCurrency() {
+			sleep(2)
+			to.loading(false)
+			to.setRate(result)
+		}
 	}
 
-	func loadCode(_ code: Currency?) {
-		print("\(code) Converter VIEW ______")
-		to.setCurrency(Currency(code: "KZT", name: "Kazakhstani tenge"))
+	func setCurrenciesToAction(_ currencies: [Currency]) {
+		to.makeActions(currencies: currencies)
+		from.makeActions(currencies: currencies)
+	}
+
+	func loadCode(_ currency: Currency?) {
 		from.setCurrency(Currency(code: "USD", name: "US Dollars"))
+		guard let code = currency?.code, let name = currency?.name else { return }
+		to.setCurrency(Currency(code: code, name: name))
 	}
 	
 	func didChanged() {
 		let fromCurrency = from.getCurrency()
 		let toCurrency = to.getCurrency()
-		let amount = from.getText()
-		twoCurrencies?(fromCurrency, toCurrency, amount)
+		let amountFrom = from.getText()
+		let amountTo = to.getText()
+		// TUT mozhet byt' oshibka
+		if amountFrom > 0 {
+			print("FROM_____")
+			twoCurrencies?(fromCurrency, toCurrency, amountFrom)
+			to.loading(true)
+		} else if amountTo > 0 {
+			print("TO_____")
+			twoCurrencies?(toCurrency, fromCurrency, amountTo)
+			from.loading(true)
+		}
+	}
+
+	func didBeginEditing(_ view: CurrencySelectorView) {
+		if view == from {
+			to.resetInput()
+		} else if view == to {
+			from.resetInput()
+		}
 	}
 
 	func configure() {
@@ -84,10 +116,9 @@ extension CoverterView: ICoverterView, ICurrencySelectorViewDelegate
 //		stack.addArrangedSubview()
 		addSubview(stack)
 		NSLayoutConstraint.activate([
-			stack.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+			stack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 2),
 			stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
 			stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-			stack.heightAnchor.constraint(equalToConstant: 200),
 		])
 	}
 

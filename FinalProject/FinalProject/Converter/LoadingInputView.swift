@@ -27,7 +27,7 @@ final class LoadingInputView: UIView
 		let code = UILabel()
 		code.textColor = .black
 		code.font = UIFont.preferredFont(forTextStyle: .largeTitle)
-		code.text = "    "
+		code.text = "--------------"
 		return code
 	}()
 
@@ -72,10 +72,10 @@ extension LoadingInputView: ILoadingInputView, SkeletonLoadable
 		input.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(input)
 		NSLayoutConstraint.activate([
-			input.topAnchor.constraint(equalTo: topAnchor, constant: 1),
-			input.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 1),
-			input.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -1),
-			input.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1),
+			input.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+			input.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+			input.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+			input.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
 		])
 	}
 }

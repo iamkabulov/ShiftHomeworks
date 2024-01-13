@@ -27,3 +27,21 @@ extension CurrencyData {
 extension CurrencyData: Identifiable {
 
 }
+
+class CurrencyCoreData {
+
+	let container: NSPersistentContainer
+	let context: NSManagedObjectContext
+	static let shared = CurrencyCoreData()
+
+	private init() {
+		self.container = NSPersistentContainer(name: "CurrencyDataModel")
+		self.context = self.container.viewContext
+		self.container.loadPersistentStores { _, error in
+			guard let error = error else { return }
+			print(error)
+			print("Container: Something went wrong")
+		}
+	}
+
+}

@@ -32,6 +32,11 @@ final class ConverterViewController: UIViewController
 		super.viewDidLoad()
 		self._presenter?.viewDidLoad(view: self.converterView, viewController: self)
 	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self._presenter?.getSavedCurrencies()
+	}
 }
 
 extension ConverterViewController: ViewProtocol

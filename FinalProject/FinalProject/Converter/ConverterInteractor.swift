@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 protocol IConverterInteractor: AnyObject
 {
@@ -18,6 +19,8 @@ final class ConverterInteractor
 {
 	weak var _presenter: ConverterPresenter?
 	private let network = ConverterNetwork()
+	private let coreData = CurrencyCoreData.shared
+	private var currency: [CurrencyData] = []
 }
 
 extension ConverterInteractor: IConverterInteractor, InteractorProtocol
@@ -62,6 +65,23 @@ extension ConverterInteractor: IConverterInteractor, InteractorProtocol
 			case .failure(let error):
 				print(error.localizedDescription)
 			}
+		}
+	}
+
+	func getSavedCurrencies() {
+		let request = CurrencyData.fetchRequest()
+		do {
+			var currencies: [Currency] = []
+			let entities = try self.coreData.context.fetch(request)
+			entities.forEach { entity in
+				let code = entity.code
+				let name = entity.name
+				currencies.append(Currency(code: code, name: name))
+			}
+			self._presenter?.getCurrencies(currencies: currencies)
+			print(currencies)
+		} catch {
+			print("loading error: ------")
 		}
 	}
 }

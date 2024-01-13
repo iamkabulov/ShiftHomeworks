@@ -18,17 +18,11 @@ final class CurrencyListInteractor
 {
 	weak var _presenter: CurrencyListPresenter?
 	private let network: CurrencyListNetwork
-	private let container = NSPersistentContainer(name: "CurrencyDataModel")
-	private var context: NSManagedObjectContext
+	private let coreData = CurrencyCoreData.shared
 	private var currency: [CurrencyData] = []
 
 	init() {
-		self.context = self.container.viewContext
 		self.network = CurrencyListNetwork()
-		self.container.loadPersistentStores { _, error in
-			print(error)
-			print("Container: Something went wrong")
-		}
 	}
 }
 
@@ -55,14 +49,15 @@ extension CurrencyListInteractor: ICurrencyListInteractor, InteractorProtocol
 	}
 	func saveContext() {
 		do {
-			try context.save()
+			try self.coreData.context.save()
+			self.getSavedCurrencies()
 		} catch {
 			print("ERROR saving")
 		}
 	}
 
 	func saveCurrency(code: String, name: String) {
-		let newEntity = CurrencyData(context: self.context)
+		let newEntity = CurrencyData(context: self.coreData.context)
 		newEntity.name = name
 		newEntity.code = code
 		self.currency.append(newEntity)
@@ -72,12 +67,12 @@ extension CurrencyListInteractor: ICurrencyListInteractor, InteractorProtocol
 	func deleteCurrency(code: String, name: String) {
 		let request = CurrencyData.fetchRequest()
 		do {
-			let entities = try context.fetch(request)
+			let entities = try self.coreData.context.fetch(request)
 			entities.forEach { entity in
 				print(code, name)
 				if code == entity.code && name == entity.name {
 					print("DELETING \(entity)")
-					context.delete(entity)
+					self.coreData.context.delete(entity)
 				}
 			}
 		} catch {
@@ -86,17 +81,18 @@ extension CurrencyListInteractor: ICurrencyListInteractor, InteractorProtocol
 		saveContext()
 	}
 
-	func getCurrencies() {
+	func getSavedCurrencies() {
 		let request = CurrencyData.fetchRequest()
 		do {
 			var currencies: [Currency] = []
-			let entities = try context.fetch(request)
+			let entities = try self.coreData.context.fetch(request)
 			entities.forEach { entity in
 				let code = entity.code
 				let name = entity.name
 				currencies.append(Currency(code: code, name: name))
 			}
 			self._presenter?.getCurrencies(currencies: currencies)
+			print(currencies)
 		} catch {
 			print("loading error: ------")
 		}

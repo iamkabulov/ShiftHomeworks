@@ -75,7 +75,13 @@ extension ConverterPresenter: IConverterPresenter, PresenterProtocol
 		self._converterView?.twoCurrencies = { from, to, amount in
 			print("\(from) Presenter")
 			print("\(to) Presenter")
+			guard from != to else {
+				self._router?.showAlert(viewController: viewController, title: "Please choose another currency", message: "salamaleikum")
+				self._converterView?.loading(from: from, to: to, result: false)
+				return
+			}
 			self._interactor?.loadPairExchangeRateWithAmount(from: from, to: to, amount: amount)
+			self._converterView?.loading(from: from, to: to, result: true)
 		}
 	}
 }

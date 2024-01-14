@@ -136,8 +136,7 @@ extension CurrencySelectorView: IInputViewDelegate
 
 	func setupView(_ view: UIView) {
 		currencySelectorButton.translatesAutoresizingMaskIntoConstraints = false
-		amount.translatesAutoresizingMaskIntoConstraints = false
-		loadingAmount.translatesAutoresizingMaskIntoConstraints = false
+		view.translatesAutoresizingMaskIntoConstraints = false
 
 		addSubview(view)
 		addSubview(currencySelectorButton)

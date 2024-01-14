@@ -53,6 +53,7 @@ extension InputView: UITextFieldDelegate
 		delegate?.textFieldDidBeginEditing(self.input)
 		return true
 	}
+	
 	func setRateResult(_ result: PairExchangeRateWithAmount) {
 		let rate = result.conversionResult
 		self.input.text = String(format: "%.1f", rate)

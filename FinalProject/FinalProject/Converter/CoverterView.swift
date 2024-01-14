@@ -11,11 +11,17 @@ protocol ICoverterView: AnyObject
 {
 	var twoCurrencies: ((String, String, Double) -> Void)? { get set }
 	func showRate(_ result: PairExchangeRateWithAmount)
+	func loading(from: String, to: String, result: Bool)
 	func setCurrenciesToAction(_ currencies: [Currency])
 }
 
 final class CoverterView: UIView
 {
+	private var fromPrevios: Double = 0
+	private var toPrevios: Double = 0
+	private var currencyFromPrevios: String = ""
+	private var currencyToPrevios: String = ""
+
 	lazy private var from: CurrencySelectorView = {
 		let ui = CurrencySelectorView()
 		return ui
@@ -53,15 +59,25 @@ final class CoverterView: UIView
 
 extension CoverterView: ICoverterView, ICurrencySelectorViewDelegate
 {
+	func loading(from: String, to: String, result: Bool) {
+		if from == self.from.getCurrency() && to == self.to.getCurrency() {
+			self.to.loading(result)
+		} else if from == self.to.getCurrency() && to == self.from.getCurrency() {
+			self.from.loading(result)
+		}
+	}
+
 	func showRate(_ result: PairExchangeRateWithAmount) {
 		if result.baseCode == to.getCurrency() {
-			sleep(2)
+			sleep(1)
 			from.loading(false)
 			from.setRate(result)
+			self.fromPrevios = from.getText()
 		} else if result.baseCode == from.getCurrency() {
-			sleep(2)
+			sleep(1)
 			to.loading(false)
 			to.setRate(result)
+			self.toPrevios = to.getText()
 		}
 	}
 
@@ -81,22 +97,28 @@ extension CoverterView: ICoverterView, ICurrencySelectorViewDelegate
 		let toCurrency = to.getCurrency()
 		let amountFrom = from.getText()
 		let amountTo = to.getText()
+		print(amountTo)
+		print(amountFrom)
 		// TUT mozhet byt' oshibka
-		if amountFrom > 0 {
+		//TODO: - ISPRAVIT' A TO REAGIRUET NA TOUCHESBEGAN V VIEWCONTROLLERE
+		if amountFrom > 0.0 && (amountFrom != self.fromPrevios || fromCurrency != self.currencyFromPrevios) {
+			self.fromPrevios = amountFrom
+			self.currencyFromPrevios = fromCurrency
 			print("FROM_____")
 			twoCurrencies?(fromCurrency, toCurrency, amountFrom)
-			to.loading(true)
-		} else if amountTo > 0 {
+		} else if amountTo > 0.0 && (amountTo != self.toPrevios || toCurrency != self.currencyToPrevios) {
+			self.toPrevios = amountTo
 			print("TO_____")
 			twoCurrencies?(toCurrency, fromCurrency, amountTo)
-			from.loading(true)
 		}
 	}
 
 	func didBeginEditing(_ view: CurrencySelectorView) {
 		if view == from {
+			to.loading(false)
 			to.resetInput()
 		} else if view == to {
+			from.loading(false)
 			from.resetInput()
 		}
 	}

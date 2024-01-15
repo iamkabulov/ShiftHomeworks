@@ -101,12 +101,12 @@ extension CoverterView: ICoverterView, ICurrencySelectorViewDelegate
 		print(amountFrom)
 		// TUT mozhet byt' oshibka
 		//TODO: - ISPRAVIT' A TO REAGIRUET NA TOUCHESBEGAN V VIEWCONTROLLERE
-		if amountFrom > 0.0 && (amountFrom != self.fromPrevios || fromCurrency != self.currencyFromPrevios) {
+		if (amountFrom > 0.0 && amountFrom != self.fromPrevios) || ( amountFrom > 0.0 && fromCurrency != self.currencyFromPrevios) {
 			self.fromPrevios = amountFrom
 			self.currencyFromPrevios = fromCurrency
 			print("FROM_____")
 			twoCurrencies?(fromCurrency, toCurrency, amountFrom)
-		} else if amountTo > 0.0 && (amountTo != self.toPrevios || toCurrency != self.currencyToPrevios) {
+		} else if (amountTo > 0.0 && amountTo != self.toPrevios) || (amountTo > 0.0 && toCurrency != self.currencyToPrevios) {
 			self.toPrevios = amountTo
 			print("TO_____")
 			twoCurrencies?(toCurrency, fromCurrency, amountTo)

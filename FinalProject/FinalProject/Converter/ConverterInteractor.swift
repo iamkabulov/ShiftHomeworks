@@ -60,7 +60,6 @@ extension ConverterInteractor: IConverterInteractor, InteractorProtocol
 		self.network.loadPairRatesWithAmount(from: from, to: to, amount: amount) { result in
 			switch result {
 			case .success(let res):
-				print(res)
 				self._presenter?.showExchangeRate(result: res)
 			case .failure(let error):
 				print(error.localizedDescription)

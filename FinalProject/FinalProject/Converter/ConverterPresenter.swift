@@ -66,7 +66,7 @@ extension ConverterPresenter: IConverterPresenter, PresenterProtocol
 
 		self._interactor?.getSavedCurrencies()
 
-		self._converterView?.twoCurrencies = { from, to, amount in
+		self._converterView?.getExchangeRateHandler = { from, to, amount in
 			print("\(from) Presenter")
 			print("\(to) Presenter")
 			guard from != to else {

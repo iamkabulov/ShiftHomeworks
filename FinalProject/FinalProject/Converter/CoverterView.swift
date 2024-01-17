@@ -9,7 +9,7 @@ import UIKit
 
 protocol ICoverterView: AnyObject
 {
-	var twoCurrencies: ((String, String, Double) -> Void)? { get set }
+	var getExchangeRateHandler: ((String, String, Double) -> Void)? { get set }
 	func showRate(_ result: PairExchangeRateWithAmount)
 	func loading(from: String, to: String, result: Bool)
 	func setCurrenciesToAction(_ currencies: [Currency])
@@ -17,28 +17,25 @@ protocol ICoverterView: AnyObject
 
 final class CoverterView: UIView
 {
-	private var fromPrevios: Double = 0
-	private var toPrevios: Double = 0
-	private var currencyFromPrevios: String = ""
-	private var currencyToPrevios: String = ""
+	private var previousFromCurrencyInputAmountValue: Double = 0
+	private var previousToCurrencyInputAmountValue: Double = 0
+	private var previousFromCurrencyCode: String = ""
+	private var previousToCurrencyCode: String = ""
 
-	lazy private var from: CurrencySelectorView = {
+	lazy private var fromCurrencyInputView: CurrencySelectorView = {
 		let ui = CurrencySelectorView()
 		return ui
 	}()
 
-	lazy private var to: CurrencySelectorView = {
+	lazy private var toCurrencyInputView: CurrencySelectorView = {
 		let ui = CurrencySelectorView()
 		return ui
 	}()
 
-	weak var selectorViewDelegate: ICurrencySelectorViewDelegate?
 	weak var delegate: ICoverterView?
-	var amountReturnHandler: ((Double) -> Void)?
-	var currencyReturnHandler: ((String) -> Void)?
-	var twoCurrencies: ((String, String, Double) -> Void)?
+	var getExchangeRateHandler: ((String, String, Double) -> Void)?
 	
-	lazy private var stack: UIStackView = {
+	lazy private var converterStackView: UIStackView = {
 		let stack = UIStackView()
 		stack.distribution = .fillProportionally
 		stack.alignment = .center
@@ -60,87 +57,88 @@ final class CoverterView: UIView
 extension CoverterView: ICoverterView, ICurrencySelectorViewDelegate
 {
 	func loading(from: String, to: String, result: Bool) {
-		if from == self.from.getCurrency() && to == self.to.getCurrency() {
-			self.to.loading(result)
-		} else if from == self.to.getCurrency() && to == self.from.getCurrency() {
-			self.from.loading(result)
+		if from == self.fromCurrencyInputView.getCurrency() && to == self.toCurrencyInputView.getCurrency() {
+			self.toCurrencyInputView.loading(result)
+		} else if from == self.toCurrencyInputView.getCurrency() && to == self.fromCurrencyInputView.getCurrency() {
+			self.fromCurrencyInputView.loading(result)
 		}
 	}
 
 	func showRate(_ result: PairExchangeRateWithAmount) {
-		if result.baseCode == to.getCurrency() {
+		if result.baseCode == toCurrencyInputView.getCurrency() {
 			sleep(1)
-			from.loading(false)
-			from.setRate(result)
-			self.fromPrevios = from.getText()
-		} else if result.baseCode == from.getCurrency() {
+			// Кажется нужно сделать для все один метод
+			fromCurrencyInputView.loading(false)
+			fromCurrencyInputView.setRate(result)
+			self.previousFromCurrencyInputAmountValue = fromCurrencyInputView.getText()
+		} else if result.baseCode == fromCurrencyInputView.getCurrency() {
 			sleep(1)
-			to.loading(false)
-			to.setRate(result)
-			self.toPrevios = to.getText()
+			// Кажется нужно сделать для все один метод
+			toCurrencyInputView.loading(false)
+			toCurrencyInputView.setRate(result)
+			self.previousToCurrencyInputAmountValue = toCurrencyInputView.getText()
 		}
 	}
 
 	func setCurrenciesToAction(_ currencies: [Currency]) {
-		to.makeActions(currencies: currencies)
-		from.makeActions(currencies: currencies)
+		toCurrencyInputView.makeActions(currencies: currencies)
+		fromCurrencyInputView.makeActions(currencies: currencies)
 	}
 
 	func loadCode(_ currency: Currency?) {
-		from.setCurrency(Currency(code: "USD", name: "US Dollars"))
+		fromCurrencyInputView.setCurrency(Currency(code: "USD", name: "US Dollars"))
 		guard let code = currency?.code, let name = currency?.name else { return }
-		to.setCurrency(Currency(code: code, name: name))
+		toCurrencyInputView.setCurrency(Currency(code: code, name: name))
 	}
 	
 	func didChanged() {
-		let fromCurrency = from.getCurrency()
-		let toCurrency = to.getCurrency()
-		let amountFrom = from.getText()
-		let amountTo = to.getText()
-		print(amountTo)
-		print(amountFrom)
-		// TUT mozhet byt' oshibka
-		//TODO: - ISPRAVIT' A TO REAGIRUET NA TOUCHESBEGAN V VIEWCONTROLLERE
-		if (amountFrom > 0.0 && amountFrom != self.fromPrevios) || ( amountFrom > 0.0 && fromCurrency != self.currencyFromPrevios) {
-			self.fromPrevios = amountFrom
-			self.currencyFromPrevios = fromCurrency
+		let currentFromCurrencyCode = fromCurrencyInputView.getCurrency()
+		let currentToCurrencyCode = toCurrencyInputView.getCurrency()
+		let currentFromAmountValue = fromCurrencyInputView.getText()
+		let currentToAmountValue = toCurrencyInputView.getText()
+		if (currentFromAmountValue > 0.0 && currentFromAmountValue != self.previousFromCurrencyInputAmountValue) || ( currentFromAmountValue > 0.0 && currentFromCurrencyCode != self.previousFromCurrencyCode)
+		{
+			self.previousFromCurrencyInputAmountValue = currentFromAmountValue
+			self.previousFromCurrencyCode = currentFromCurrencyCode
 			print("FROM_____")
-			twoCurrencies?(fromCurrency, toCurrency, amountFrom)
-		} else if (amountTo > 0.0 && amountTo != self.toPrevios) || (amountTo > 0.0 && toCurrency != self.currencyToPrevios) {
-			self.toPrevios = amountTo
+			getExchangeRateHandler?(currentFromCurrencyCode, currentToCurrencyCode, currentFromAmountValue)
+		}
+		else if (currentToAmountValue > 0.0 && currentToAmountValue != self.previousToCurrencyInputAmountValue) || (currentToAmountValue > 0.0 && currentToCurrencyCode != self.previousToCurrencyCode)
+		{
+			self.previousToCurrencyInputAmountValue = currentToAmountValue
+			self.previousToCurrencyCode = currentToCurrencyCode
 			print("TO_____")
-			twoCurrencies?(toCurrency, fromCurrency, amountTo)
+			getExchangeRateHandler?(currentToCurrencyCode, currentFromCurrencyCode, currentToAmountValue)
 		}
 	}
 
 	func didBeginEditing(_ view: CurrencySelectorView) {
-		if view == from {
-			to.loading(false)
-			to.resetInput()
-		} else if view == to {
-			from.loading(false)
-			from.resetInput()
+		if view == fromCurrencyInputView {
+			toCurrencyInputView.loading(false)
+			toCurrencyInputView.resetInput()
+		} else if view == toCurrencyInputView {
+			fromCurrencyInputView.loading(false)
+			fromCurrencyInputView.resetInput()
 		}
 	}
 
 	func configure() {
-		stack.translatesAutoresizingMaskIntoConstraints = false
-		from.translatesAutoresizingMaskIntoConstraints = false
-		to.translatesAutoresizingMaskIntoConstraints = false
-		from.delegate = self
-		to.delegate = self
+		converterStackView.translatesAutoresizingMaskIntoConstraints = false
+		fromCurrencyInputView.translatesAutoresizingMaskIntoConstraints = false
+		toCurrencyInputView.translatesAutoresizingMaskIntoConstraints = false
+		fromCurrencyInputView.delegate = self
+		toCurrencyInputView.delegate = self
 
 	}
 
 	func setupView() {
-		stack.addArrangedSubview(from)
-		stack.addArrangedSubview(to)
-//		stack.addArrangedSubview()
-		addSubview(stack)
+		converterStackView.addArrangedSubview(fromCurrencyInputView)
+		converterStackView.addArrangedSubview(toCurrencyInputView)
+		addSubview(converterStackView)
 		NSLayoutConstraint.activate([
-			stack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 2),
-			stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-			stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+			converterStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 2),
+			converterStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+			converterStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 		])
 	}
 

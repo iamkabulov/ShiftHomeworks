@@ -127,6 +127,9 @@ extension CurrencyListView: UITableViewDataSource
 			cell.removeCurrency = { code, name in
 				self.removeCurrencyHandler?(code, name)
 			}
+
+			//SWITCH НЕПРАВИЛЬНО РАБОТАЕТ
+			//TODO: - BUG
 			guard !toggleOnCurries.isEmpty else {
 				cell.setCurrency(code: code, name: name, isOn: false)
 				return cell

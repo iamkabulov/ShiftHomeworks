@@ -100,14 +100,12 @@ extension CoverterView: ICoverterView, ICurrencySelectorViewDelegate
 		{
 			self.previousFromCurrencyInputAmountValue = currentFromAmountValue
 			self.previousFromCurrencyCode = currentFromCurrencyCode
-			print("FROM_____")
 			getExchangeRateHandler?(currentFromCurrencyCode, currentToCurrencyCode, currentFromAmountValue)
 		}
 		else if (currentToAmountValue > 0.0 && currentToAmountValue != self.previousToCurrencyInputAmountValue) || (currentToAmountValue > 0.0 && currentToCurrencyCode != self.previousToCurrencyCode)
 		{
 			self.previousToCurrencyInputAmountValue = currentToAmountValue
 			self.previousToCurrencyCode = currentToCurrencyCode
-			print("TO_____")
 			getExchangeRateHandler?(currentToCurrencyCode, currentFromCurrencyCode, currentToAmountValue)
 		}
 	}
@@ -141,6 +139,4 @@ extension CoverterView: ICoverterView, ICurrencySelectorViewDelegate
 			converterStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 		])
 	}
-
-	
 }

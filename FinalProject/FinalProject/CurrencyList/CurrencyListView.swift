@@ -31,16 +31,6 @@ final class CurrencyListView: UITableView
 		super.init(frame: frame, style: style)
 		configureTableView()
 		setupTableView()
-//		self.model = [Currency(code: "EUR", name: "Euro"),
-//					  Currency(code: "USD", name: "US Dollar"),
-//					  Currency(code: "EUR", name: "Euro"),
-//					  Currency(code: "USD", name: "US Dollar"),
-//					  Currency(code: "EUR", name: "Euro"),
-//					  Currency(code: "USD", name: "US Dollar"),
-//					  Currency(code: "EUR", name: "Euro"),
-//					  Currency(code: "USD", name: "US Dollar"),
-//					  Currency(code: "EUR", name: "Euro"),
-//					  Currency(code: "USD", name: "US Dollar"),]
 	}
 
 	required init?(coder: NSCoder) {
@@ -62,7 +52,6 @@ extension CurrencyListView: ICurrencyListView
 	func showCurrencies(_ model: [Currency]) {
 		self.isLoaded = true
 		self.model = model
-		self.reload()
 	}
 
 
@@ -146,7 +135,6 @@ extension CurrencyListView: UITableViewDelegate
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 		guard tableView.cellForRow(at: indexPath) is CurrencyCellView else { return }
-		guard let cell = tableView.cellForRow(at: indexPath) as? CurrencyCellView else { return }
 		let code = model[indexPath.item]
 		currencyTappedHandler?(code)
 	}

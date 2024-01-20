@@ -79,14 +79,10 @@ extension CurrencyCellView: ICurrencyCellView
 	func setCurrency(code: String, name: String, isOn: Bool) {
 		self.code.text = code
 		self.name.text = name
+		self.toggle.isOn = isOn
 		let countryCode = findFlagImage(code)
 		guard let countryCode = countryCode else { return self.flagImage.image = UIImage(named: "xx") }
 		self.flagImage.image = UIImage(named: countryCode)
-		self.toggle.isOn = isOn
-	}
-
-	func setToggleOn() {
-
 	}
 
 	func findFlagImage(_ currencyCode: String) -> String? {

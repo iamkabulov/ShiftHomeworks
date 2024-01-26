@@ -77,11 +77,11 @@ final class CurrencyCellView: UITableViewCell
 extension CurrencyCellView: ICurrencyCellView
 {
 	func setCurrency(code: String, name: String, isOn: Bool) {
+		self.toggle.isOn = isOn
 		self.code.text = code
 		self.name.text = name
-		self.toggle.isOn = isOn
 		let countryCode = findFlagImage(code)
-		guard let countryCode = countryCode else { return self.flagImage.image = UIImage(named: "xx") }
+		guard let countryCode = countryCode else { return self.flagImage.image = UIImage(systemName: "photo")}
 		self.flagImage.image = UIImage(named: countryCode)
 	}
 
@@ -97,11 +97,9 @@ extension CurrencyCellView: ICurrencyCellView
 		guard let code = self.code.text, let name = self.name.text else { return }
 		if (sender.isOn) {
 			addCurrency?(code, name)
-			print(code + " SWITCH ON")
 		}
 		else {
 			removeCurrency?(code, name)
-			print(code + " SWITCH OFF")
 		}
 	}
 

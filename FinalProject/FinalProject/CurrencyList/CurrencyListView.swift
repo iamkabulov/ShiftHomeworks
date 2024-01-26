@@ -101,7 +101,7 @@ extension CurrencyListView: UITableViewDataSource
 
 			// Наверное нужно смаппить и сделать новый лист тогда будет проще
 			//TODO: - Кажется тут есть баг что при скроле он включает тоггл
-			toggleOnCurries.contains { currency in
+			var _ = toggleOnCurries.contains { currency in
 				if currency.code == code && currency.name == name {
 					cell.setCurrency(code: code, name: name, isOn: true)
 					return true
@@ -117,8 +117,6 @@ extension CurrencyListView: UITableViewDataSource
 				self.removeCurrencyHandler?(code, name)
 			}
 
-			//SWITCH НЕПРАВИЛЬНО РАБОТАЕТ
-			//TODO: - BUG
 			guard !toggleOnCurries.isEmpty else {
 				cell.setCurrency(code: code, name: name, isOn: false)
 				return cell

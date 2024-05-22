@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol IFootballPlayerDetailInteractor {
-	func load(name: String) -> FootballPlayerDetailEntity?
+	func load(index: Int?) -> FootballPlayerDetailEntity
 }
 
 final class FootballPlayerDetailInteractor {
@@ -19,23 +19,8 @@ final class FootballPlayerDetailInteractor {
 }
 
 extension FootballPlayerDetailInteractor: IFootballPlayerDetailInteractor {
-	
-	func load(name: String) -> FootballPlayerDetailEntity? {
-		guard let fileURL = Bundle.main.url(forResource: "FootballPlayersData", withExtension: "json") else {
-			fatalError("Не удалось найти файл")
-		}
-		do {
-			let jsonData = try Data(contentsOf: fileURL)
-			let decoder = JSONDecoder()
-			let model = try decoder.decode([FootballPlayersEntity].self, from: jsonData)
-			model.forEach { player in
-				if name == player.name {
-					footballPlayerDetail = FootballPlayerDetailEntity(with: player)
-				}
-			}
-		} catch {
-			fatalError("Не удалось прочитать файл")
-		}
-		return footballPlayerDetail
+	func load(index: Int?) -> FootballPlayerDetailEntity {
+		guard let index = index else { return FootballPlayerDetailEntity(with: FootballPlayersEntity.getDefaultModel()[0])}
+		return FootballPlayerDetailEntity(with: FootballPlayersEntity.getDefaultModel()[index])
 	}
 }

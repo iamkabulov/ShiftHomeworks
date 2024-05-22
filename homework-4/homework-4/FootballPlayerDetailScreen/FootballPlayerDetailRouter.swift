@@ -19,15 +19,20 @@ final class FootballPlayerDetailRouter {
 extension FootballPlayerDetailRouter: IFootballPlayerDetailRouter
 {
 	func nextModule(vc: UIViewController, model: FootballPlayerDetailEntity) {
-		let interactor = FootballPlayerContractInteractor()
-		let router = FootballPlayerContractRouter()
-		let presenter = FootballPlayerContractPresenter(interactor: interactor, router: router, model: model)
-		let sheetsVC = FootballPlayerContractViewController(presenter: presenter)
-		if let sheet = sheetsVC.sheetPresentationController {
-			sheet.detents = [.custom(resolver: { _ in
-				return 200
-			})]
+		do {
+			let interactor = FootballPlayerContractInteractor()
+			let router = FootballPlayerContractRouter()
+			let module = try FootballPlayerContractModuleBuilder()
+				.interactor(interactor)
+				.router(router)
+				.getModel(model)
+				.build()
+			
+			vc.present(module, animated: true)
+		} catch {
+			let alert = UIAlertController(title: "Error", message: "Something went wrong. Try again later", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+			vc.present(alert, animated: true)
 		}
-		vc.present(sheetsVC, animated: true)
 	}
 }

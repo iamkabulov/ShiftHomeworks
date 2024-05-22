@@ -17,8 +17,9 @@ final class FootballPlayerDetailPresenter {
 	private var model: FootballPlayerDetailEntity?
 	private let interactor: IFootballPlayerDetailInteractor
 	private let router: IFootballPlayerDetailRouter
-	
-	init(interactor: IFootballPlayerDetailInteractor, router: IFootballPlayerDetailRouter, name: String) {
+
+	init(interactor: IFootballPlayerDetailInteractor, router: IFootballPlayerDetailRouter, itemIndex: Int?) {
+
 		self.interactor = interactor
 		self.router = router
 		self.model = self.interactor.load(name: name)
@@ -26,6 +27,7 @@ final class FootballPlayerDetailPresenter {
 }
 
 extension FootballPlayerDetailPresenter: IFootballPlayerDetailPresenter {
+
 	func viewDidLoad(ui: IFootballPlayerDetailView, vc: UIViewController) {
 		self.ui = ui
 		guard let model = self.model else { return }

@@ -16,10 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window?.makeKeyAndVisible()
 		let interactor = FootballPlayerInteractor()
 		let router = FootballPlayersRouter()
-		let presenter = FootballPlayerPresenter(interactor: interactor, router: router)
-		let vc = FootballPlayersViewController(presenter: presenter)
-		window?.rootViewController = UINavigationController(rootViewController: vc)
-
+		do {
+			let footballPlayersModule = try FootballPlayersModuleBuilder()
+				.router(router)
+				.interactor(interactor)
+				.build()
+			window?.rootViewController = UINavigationController(rootViewController: footballPlayersModule)
+		} catch {
+			let vc = UIViewController()
+			window?.rootViewController = vc
+			let alert = UIAlertController(title: "Error", message: "Something went wrong. Try again later", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+			vc.present(alert, animated: true)
+		}
 		return true
 	}
 }

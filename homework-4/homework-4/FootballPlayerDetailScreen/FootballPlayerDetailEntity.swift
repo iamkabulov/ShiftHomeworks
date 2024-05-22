@@ -7,9 +7,10 @@
 
 import UIKit
 
-struct FootballPlayerDetailEntity {
+struct FootballPlayerDetailEntity: Decodable {
+
 	let name: String
-	let image: UIImage
+	let image: String
 	let bio: String
 	let clubTeam: String
 	let nationalTeam: String

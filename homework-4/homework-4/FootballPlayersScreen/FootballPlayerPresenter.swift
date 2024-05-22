@@ -12,10 +12,11 @@ protocol IFootballPlayerPresenter: AnyObject {
 }
 
 final class FootballPlayerPresenter {
+	
 	weak var ui: IFootballPlayersView?
 	private let interactor: IFootballPlayerInteractor
 	private let router: IFootballPlayersRouter
-
+	
 	init(interactor: IFootballPlayerInteractor, router: IFootballPlayersRouter) {
 		self.interactor = interactor
 		self.router = router
@@ -25,12 +26,13 @@ final class FootballPlayerPresenter {
 extension FootballPlayerPresenter: IFootballPlayerPresenter {
 	func viewDidLoad(ui: IFootballPlayersView, vc: UIViewController) {
 		self.ui = ui
+		vc.title = "Footballers"
 		let model = self.interactor.load()
-		
+		guard let model = model else { return }
 		self.ui?.set(model: model)
-		self.ui?.tapButtonHandler = { [weak self] itemIndex in
+		self.ui?.tapButtonHandler = { [weak self] playerName in
 			self?.router.nextModule(vc: vc,
-									itemIndex: itemIndex)
+									name: playerName)
 		}
 	}
 }

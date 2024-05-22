@@ -13,7 +13,7 @@ protocol IFootballPlayerDetailRouter: AnyObject
 }
 
 final class FootballPlayerDetailRouter {
-
+	
 }
 
 extension FootballPlayerDetailRouter: IFootballPlayerDetailRouter

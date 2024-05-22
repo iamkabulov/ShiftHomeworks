@@ -6,14 +6,16 @@
 //
 
 import Foundation
+import UIKit
 
 protocol IFootballPlayerDetailInteractor {
 	func load(index: Int?) -> FootballPlayerDetailEntity
 }
 
 final class FootballPlayerDetailInteractor {
+	
 	weak var presenter: FootballPlayerDetailPresenter?
-
+	var footballPlayerDetail: FootballPlayerDetailEntity?
 }
 
 extension FootballPlayerDetailInteractor: IFootballPlayerDetailInteractor {

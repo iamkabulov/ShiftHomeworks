@@ -12,16 +12,17 @@ protocol IFootballPlayerDetailPresenter: AnyObject {
 }
 
 final class FootballPlayerDetailPresenter {
-
+	
 	weak var ui: IFootballPlayerDetailView?
 	private var model: FootballPlayerDetailEntity?
 	private let interactor: IFootballPlayerDetailInteractor
 	private let router: IFootballPlayerDetailRouter
 
 	init(interactor: IFootballPlayerDetailInteractor, router: IFootballPlayerDetailRouter, itemIndex: Int?) {
+
 		self.interactor = interactor
 		self.router = router
-		self.model = self.interactor.load(index: itemIndex)
+		self.model = self.interactor.load(name: name)
 	}
 }
 

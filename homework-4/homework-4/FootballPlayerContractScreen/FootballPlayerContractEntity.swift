@@ -10,11 +10,11 @@ import Foundation
 struct FootballPlayerContractEntity {
 	let cost: Int
 	let contract: Int
-
+	
 	func getCost() -> String {
 		"Market Value: \(cost) million $"
 	}
-
+	
 	func getContract() -> String {
 		"Contract: \(contract) million € per season"
 	}

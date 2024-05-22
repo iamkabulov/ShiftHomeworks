@@ -128,9 +128,11 @@
 				B0F353502A0789F3002E8C62 /* FootballPlayerContractScreen */,
 				B0F3534B2A06E5EE002E8C62 /* FootballPlayerDetailScreen */,
 				B0F353432A06D9BE002E8C62 /* FootballPlayersScreen */,
+				B08C0EB22A1D176B0001089C /* LabelBuilder.swift */,
 				B0F353382A06D75E002E8C62 /* Assets.xcassets */,
 				B0F3533A2A06D75E002E8C62 /* LaunchScreen.storyboard */,
 				B0F3533D2A06D75E002E8C62 /* Info.plist */,
+				B08C0EB02A1B92800001089C /* FootballPlayersData.json */,
 			);
 			path = "homework-4";
 			sourceTree = "<group>";
@@ -238,6 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B08C0EB12A1B92800001089C /* FootballPlayersData.json in Resources */,
 				B0F3533C2A06D75E002E8C62 /* LaunchScreen.storyboard in Resources */,
 				B0F353392A06D75E002E8C62 /* Assets.xcassets in Resources */,
 			);
@@ -254,6 +257,7 @@
 				B05333672A11102C001B7524 /* FootballPlayersRouter.swift in Sources */,
 				B0F353522A078A55002E8C62 /* FootbalPlayerContractViewController.swift in Sources */,
 				B0CA38512A093BBA00779CD0 /* FootballPlayerContractView.swift in Sources */,
+				B08C0EB32A1D176B0001089C /* LabelBuilder.swift in Sources */,
 				B05333752A13EEC7001B7524 /* FootballPlayerContractRouter.swift in Sources */,
 				B0CA38532A0942D300779CD0 /* FootballPlayerContractEntity.swift in Sources */,
 				B0F3534A2A06DFD9002E8C62 /* FootballPlayersEntity.swift in Sources */,

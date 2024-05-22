@@ -7,13 +7,12 @@
 
 import UIKit
 
-protocol IFootballPlayersRouter: AnyObject
-{
-	func nextModule(vc: UIViewController, itemIndex: Int)
+protocol IFootballPlayersRouter: AnyObject {
+	func nextModule(vc: UIViewController, name: String)
 }
 
 final class FootballPlayersRouter {
-
+	
 }
 
 extension FootballPlayersRouter: IFootballPlayersRouter

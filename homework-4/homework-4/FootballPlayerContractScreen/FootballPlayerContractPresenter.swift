@@ -12,11 +12,12 @@ protocol IFootballPlayerContractPresenter {
 }
 
 final class FootballPlayerContractPresenter {
+	
 	weak var ui: IFootballPlayerContractView?
 	private let interactor: IFootballPlayerContractInteractor
 	private let router: IFootballPlayerContractRouter
 	private let model: FootballPlayerContractEntity?
-
+	
 	init(interactor: IFootballPlayerContractInteractor, router: IFootballPlayerContractRouter, model: FootballPlayerDetailEntity) {
 		self.interactor = interactor
 		self.router = router
@@ -25,15 +26,14 @@ final class FootballPlayerContractPresenter {
 }
 
 extension FootballPlayerContractPresenter: IFootballPlayerContractPresenter {
+
 	func viewDidLoad(ui: IFootballPlayerContractView, vc: UIViewController) {
 		self.ui = ui
 		guard let model = self.model else { return }
 		self.ui?.set(model: model)
-
+		
 		self.ui?.closeTappedHandler = { [unowned self] in
 			vc.dismiss(animated: true)
 		}
 	}
-
-
 }

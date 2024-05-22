@@ -1,0 +1,123 @@
+[
+	{
+		"name": "Haaland",
+		"bio": "Erling Braut Haaland (né Håland; Urban East Norwegian: [ˈhòːlɑn] born 21 July 2000) is a Norwegian professional footballer who plays as a striker for Premier League club Manchester City and the Norway national team. Considered one of the best players in the world, he is known for his speed, strength, and finishing inside the box.",
+		"image": "haaland",
+		"clubTeam": "MANCHESTER CITY",
+		"nationalTeam": "Norwey",
+		"number": 9,
+		"goals": 36,
+		"cost": 111,
+		"contract": 300
+	},
+	{
+		"name": "Ronaldo",
+		"bio": "Cristiano Ronaldo dos Santos Aveiro GOIH ComM (Portuguese pronunciation: [kɾiʃˈtjɐnu ʁɔˈnaldu]; born 5 February 1985) is a Portuguese professional footballer who plays as a forward for and captains both Saudi Professional League club Al Nassr and the Portugal national team. Widely regarded as one of the greatest players of all time, Ronaldo has won five Ballon d'Or awards and four European Golden Shoes, the most by a European player. He has won 32 trophies in his career, including seven league titles, five UEFA Champions Leagues, the UEFA European Championship and the UEFA Nations League. Ronaldo holds the records for most appearances (183), goals (140), and assists (42) in the Champions League, goals in the European Championship (14), international goals (122), and international appearances (198). He is one of the few players to have made over 1,100 professional career appearances, and has scored over 800 official senior career goals for club and country. He is the only player to score in five different World Cups.",
+		"image": "cr7",
+		"clubTeam": "MANCHESTER UNITED",
+		"nationalTeam": "Portugal",
+		"number": 7,
+		"goals": 32,
+		"cost": 120,
+		"contract": 192
+	},
+	{
+		"name": "Messi",
+		"bio": "Lionel Andrés Messi (Spanish pronunciation: [ljoˈnel anˈdɾes ˈmesi] (listen); born 24 June 1987), also known as Leo Messi, is an Argentine professional footballer who plays as a forward for Ligue 1 club Paris Saint-Germain and captains the Argentina national team. Widely regarded as one of the greatest players of all time, Messi has won a record seven Ballon d'Or awards[note 2] and a record six European Golden Shoes, and in 2020 he was named to the Ballon d'Or Dream Team. Until leaving the club in 2021, he had spent his entire professional career with Barcelona, where he won a club-record 34 trophies, including ten La Liga titles, seven Copa del Rey titles and three UEFA Champions Leagues.[note 3] With his country, he won the 2021 Copa América and the 2022 FIFA World Cup. A prolific goalscorer and creative playmaker, Messi holds the records for most goals in La Liga (474), most hat-tricks in La Liga (36) and the UEFA Champions League (eight), and most assists in La Liga (192) and the Copa América (17). He also has the most international goals by a South American male (102). Messi has scored over 800 senior career goals for club and country, and has the most goals by a player for a single club (672).",
+		"image": "messi",
+		"clubTeam": "PSG",
+		"nationalTeam": "Argentina",
+		"number": 10,
+		"goals": 12,
+		"cost": 200,
+		"contract": 100
+	},
+	{
+		"name": "James",
+		"bio": "James David Rodríguez Rubio (born 12 July 1991) is a Colombian professional footballer who plays as an attacking midfielder or a winger for the Colombia national team. He has been praised for his technique, vision, and playmaking skills, and was often considered the successor to his compatriot Carlos Valderrama. Starting his career at Envigado, and then moving to Argentina side Banfield, James became well known in Europe during his time at Porto, winning several trophies and individual awards during his three years at the club. In 2014, James moved from AS Monaco to Real Madrid for a transfer fee of £63 million, beating Radamel Falcao as the most expensive Colombian football player and one of the most expensive players at the time. In his debut season, he was named in the La Liga Team of the Season and won La Liga Best Midfielder. In 2017, he signed for German club Bayern Munich on a two-year loan deal. In the summer of 2020, he signed for Premier League club Everton on a free transfer.",
+		"image": "james",
+		"clubTeam": "Monaco",
+		"nationalTeam": "Columbia",
+		"number": 10,
+		"goals": 3,
+		"cost": 10,
+		"contract": 5
+	},
+	{
+		"name": "Salah",
+		"bio": "Mohamed Salah Hamed Mahrous Ghaly (Arabic: محمد صلاح حامد محروس غالي, Egyptian Arabic pronunciation: [mæˈħam.mæd sˤɑˈlɑːħ ˈɣæːli]; born 15 June 1992), also known as Mo Salah, is an Egyptian professional footballer who plays as a forward for Premier League club Liverpool and captains the Egypt national team. Considered one of the best players of his generation and amongst the greatest African players of all time, he is known for his clinical finishing, dribbling, and speed.",
+		"image": "salah",
+		"clubTeam": "Liverpool",
+		"nationalTeam": "Egypt",
+		"number": 10,
+		"goals": 3,
+		"cost": 90,
+		"contract": 5
+	},
+	{
+		"name": "Khvicha",
+		"bio": "Khvicha Kvaratskhelia (Georgian: ხვიჩა კვარაცხელია, romanized: khvicha k'varatskhelia; born 12 February 2001, in short Kvara) is a Georgian professional footballer who plays as a winger for Serie A club Napoli and the Georgia national team. He is considered to be one of the best young players in the world, known for his flair, dribbling and playmaking.",
+		"image": "khvicha",
+		"clubTeam": "Napoli",
+		"nationalTeam": "Georgia",
+		"number": 10,
+		"goals": 21,
+		"cost": 90,
+		"contract": 15
+	},
+	{
+		"name": "Benzema",
+		"bio": "Karim Mostafa Benzema (born 19 December 1987) is a French professional footballer who plays as a striker for and captains La Liga club Real Madrid. Regarded as one of the best strikers of all time, he is a creative forward renowned for his goal-scoring ability, as well as his technical skills, vision, and versatility on the field.[4][5][6] He is Real Madrid's all-time second-highest goalscorer and top assist provider.[7] Benzema has won 24 trophies with Real Madrid, including four La Liga, three Copa del Rey and five UEFA Champions League titles.",
+		"image": "benzema",
+		"clubTeam": "Real Madrid",
+		"nationalTeam": "France",
+		"number": 9,
+		"goals": 21,
+		"cost": 90,
+		"contract": 15
+	},
+	{
+		"name": "Neymar",
+		"bio": "Neymar da Silva Santos Júnior (born 5 February 1992), known as Neymar Júnior or mononymously as Neymar, is a Brazilian professional footballer who plays as a forward for Ligue 1 club Paris Saint-Germain and the Brazil national team. A prolific goalscorer and renowned playmaker, he is widely regarded as one of the best players in the world as well as one of the greatest Brazilian footballers of all time. Neymar has scored at least 100 goals for three different clubs, making him one of four players to achieve this feat.",
+		"image": "neymar",
+		"clubTeam": "PSG",
+		"nationalTeam": "Brazil",
+		"number": 10,
+		"goals": 21,
+		"cost": 23,
+		"contract": 12
+	},
+	{
+		"name": "Mbappe",
+		"bio": "Kylian Mbappé Lottin (born 20 December 1998) is a French professional footballer who plays as a forward for Ligue 1 club Paris Saint-Germain and captains the France national team. Regarded as one of the best players in the world, he is renowned for his dribbling abilities, exceptional speed, and finishing.",
+		"image": "mbappe",
+		"clubTeam": "PSG",
+		"nationalTeam": "France",
+		"number": 7,
+		"goals": 21,
+		"cost": 190,
+		"contract": 24
+	},
+	{
+		"name": "Ibragimovich",
+		"bio": "Zlatan Ibrahimović (Swedish pronunciation: [ˈslǎːtan ɪbraˈhǐːmʊvɪtɕ], Bosnian pronunciation: [zlǎtan ibraxǐːmoʋitɕ]; born 3 October 1981) is a Swedish professional footballer who plays as a striker for Serie A club AC Milan and the Sweden national team. Ibrahimović is renowned for his acrobatic strikes and volleys, powerful long-range shots, and excellent technique and ball control. He is regarded as one of the greatest strikers of all time and is one of the most decorated active footballers in the world, having won 34 trophies in his career. He has scored over 570 career goals, including more than 500 club goals, and has scored in each of the last four decades.",
+		"image": "ibra",
+		"clubTeam": "Milan",
+		"nationalTeam": "Sweden",
+		"number": 10,
+		"goals": 21,
+		"cost": 25,
+		"contract": 12
+	},
+	{
+		"name": "Kane",
+		"bio": "Harry Edward Kane MBE (born 28 July 1993) is an English professional footballer who plays as a striker for Premier League club Tottenham Hotspur and captains the England national team. A prolific goalscorer with strong link play, Kane is regarded as one of the best strikers in the world. He is both Tottenham Hotspur's and England's all-time highest goalscorer, as well as being the second-highest Premier League all-time goalscorer.",
+		"image": "kane",
+		"clubTeam": "Tottenham Hotspur",
+		"nationalTeam": "England",
+		"number": 10,
+		"goals": 21,
+		"cost": 110,
+		"contract": 21
+	}
+]
